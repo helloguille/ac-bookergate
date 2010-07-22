@@ -54,9 +54,12 @@ class HW {
 
 	function send_post($mixed) {
 		$url_post = "https://www.siteminder.co.uk/hoteliers/inventory/updateInventory.rpc";
+		$post = '';
+
+		foreach ( $mixed as $id => $val ) $post .= "&$id=$val";
 
 		$ch = $this->init_curl($url_post);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "hotelierId=41&hrtda_".$mixed[0]."=".$mixed[1]);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post, 1));
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
 
@@ -70,6 +73,6 @@ class HW {
 
 $hw = new HW();
 echo $hw->login();
-//echo $hw->fetch('2010-08-06');
-echo var_dump($hw->send_post(array(149762, 3)));
+echo $hw->fetch('2010-08-06');
+echo var_dump($hw->send_post(array("hrtda_149362" => 2, "hrtda_149763" => 3, "hotelierId" => 41)));
 ?>
