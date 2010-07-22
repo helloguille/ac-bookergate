@@ -1,4 +1,6 @@
 <?php
+require_once("phpQuery/phpQuery.php");
+
 class HW {
 	private $username = "agent";
 	private $password = "11madrid11";
@@ -33,10 +35,12 @@ class HW {
 		$ch = $this->init_curl($url_login);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "j_password=".$this->password."&j_username=".$this->username."&x=0&y=0");
 
-		curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) > 5000;
-
+		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
+
+		$html = phpQuery::newDocument($info);
+		$status = $html->find('a[href="../j_acegi_logout"]')->length > 0;
+		phpQuery::unloadDocuments();
 
 		return $status;
 	}
@@ -72,7 +76,11 @@ class HW {
 }
 
 $hw = new HW();
-echo $hw->login();
-echo $hw->fetch('2010-08-06');
-echo var_dump($hw->send_post(array("hrtda_149362" => 2, "hrtda_149763" => 3, "hotelierId" => 41)));
+if ( $hw->login() ) {
+	echo $hw->fetch('2010-08-06');
+	echo var_dump($hw->send_post(array("hrtda_149362" => 2, "hrtda_149763" => 3, "hotelierId" => 41)));
+}
+else {
+	echo "login not successfull";	
+}
 ?>
