@@ -1,7 +1,7 @@
 <?php
-require_once("phpQuery/phpQuery.php");
+require_once("lib/phpQuery.php");
 
-class HW {
+class BookerGate_sitem {
 	private $username = "agent";
 	private $password = "11madrid11";
 
@@ -9,11 +9,11 @@ class HW {
 
 	private $referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
 
-	private function init_curl($url) {
+	private function init_curl($url, $method = 1) {
 		$curl_dscr = curl_init($url);
 		curl_setopt($curl_dscr, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($curl_dscr, CURLOPT_HEADER, 0);
-		curl_setopt($curl_dscr, CURLOPT_POST, 1);
+		curl_setopt($curl_dscr, CURLOPT_POST, $method);
 		curl_setopt($curl_dscr, CURLOPT_COOKIEFILE, $this->cookie_file);
 		curl_setopt($curl_dscr, CURLOPT_COOKIEJAR, $this->cookie_file);
 		curl_setopt($curl_dscr, CURLOPT_FOLLOWLOCATION, 1);
@@ -32,7 +32,7 @@ class HW {
 	function login() {
 		$url_login = "https://www.siteminder.co.uk/hoteliers/j_acegi_security_check";
 
-		$ch = $this->init_curl($url_login);
+		$ch = $this->init_curl($url_login, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "j_password=".$this->password."&j_username=".$this->username."&x=0&y=0");
 
 		$info = curl_exec($ch);
@@ -48,7 +48,7 @@ class HW {
 	function fetch($date) {
 		$url_fetch = "https://www.siteminder.co.uk/hoteliers/inventory/editInventory.do?hotelierId=41&showStopSells=&showMinStays=&fromDate=".$date."&scrollDirection=REFRESH&scrollDays=0&scrollTop=114";
 
-		$ch = $this->init_curl($url_fetch);
+		$ch = $this->init_curl($url_fetch, 0);
 
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
@@ -62,7 +62,7 @@ class HW {
 
 		foreach ( $mixed as $id => $val ) $post .= "&$id=$val";
 
-		$ch = $this->init_curl($url_post);
+		$ch = $this->init_curl($url_post, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post, 1));
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
@@ -75,12 +75,4 @@ class HW {
 	}
 }
 
-$hw = new HW();
-if ( $hw->login() ) {
-	echo $hw->fetch('2010-08-06');
-	echo var_dump($hw->send_post(array("hrtda_149362" => 2, "hrtda_149763" => 3, "hotelierId" => 41)));
-}
-else {
-	echo "login not successfull";	
-}
 ?>
