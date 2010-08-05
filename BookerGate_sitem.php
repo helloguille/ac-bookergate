@@ -69,11 +69,13 @@ class BookerGate_sitem {
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
 
-		$info = trim($info, "{}");
+		/*$info = trim($info, "{}");
 		$result = explode(',', $info);
 		$result = explode(':', $result[0]);
 
 		return ( strlen($result[1]) > 2 ? TRUE : FALSE );
+		*/
+		return $info;
 	}
 }
 
