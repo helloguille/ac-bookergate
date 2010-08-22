@@ -18,12 +18,12 @@ define('DOMDOCUMENT', 'DOMDocument');
 define('DOMELEMENT', 'DOMElement');
 define('DOMNODELIST', 'DOMNodeList');
 define('DOMNODE', 'DOMNode');
-require_once(dirname(__FILE__).'/phpQuery/DOMEvent.php');
-require_once(dirname(__FILE__).'/phpQuery/DOMDocumentWrapper.php');
-require_once(dirname(__FILE__).'/phpQuery/phpQueryEvents.php');
-require_once(dirname(__FILE__).'/phpQuery/Callback.php');
-require_once(dirname(__FILE__).'/phpQuery/phpQueryObject.php');
-require_once(dirname(__FILE__).'/phpQuery/compat/mbstring.php');
+require_once('DOMEvent.php');
+require_once('DOMDocumentWrapper.php');
+require_once('phpQueryEvents.php');
+require_once('Callback.php');
+require_once('phpQueryObject.php');
+require_once('compat/mbstring.php');
 /**
  * Static namespace for phpQuery functions.
  *
@@ -32,8 +32,8 @@ require_once(dirname(__FILE__).'/phpQuery/compat/mbstring.php');
  */
 abstract class phpQuery {
 	/**
-	 * XXX: Workaround for mbstring problems 
-	 * 
+	 * XXX: Workaround for mbstring problems
+	 *
 	 * @var bool
 	 */
 	public static $mbstringSupport = true;

@@ -1,0 +1,7354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+
+  
+  
+  
+  
+
+  <link href='/extranet/common/pee.css' type="text/css" rel="stylesheet"/>
+  <link href='/extranet/common/calendar.css' type="text/css" rel="stylesheet"/>  
+  <link href='/extranet/common/minitabs.css' type="text/css" rel="stylesheet"/>  
+  <link href='/extranet/common/favicon.ico' rel="shortcut icon"/>
+  
+  
+  <!-- vars for page name trail in header.jsp -->
+  
+  
+  
+  
+  <!-- Flag indicating if to show logo at top of page -->
+  
+  
+  <!-- Name of navigation tab to be selected -->
+  
+  
+  
+  <title>
+    Product Entry Extranet
+    
+    - allocations - allocation calendar
+  </title>
+
+ 
+  <!-- Calendar popup -->
+  
+  <script type="text/javascript">
+    var monthNameJanuary = 'January';
+    var monthNameFebruary = 'February';
+    var monthNameMarch = 'March';
+    var monthNameApril = 'April';
+    var monthNameMay = 'May';
+    var monthNameJune = 'June';
+    var monthNameJuly = 'July';
+    var monthNameAugust = 'August';
+    var monthNameSeptember = 'September';
+    var monthNameOctober = 'October';
+    var monthNameNovember = 'November';
+    var monthNameDecember = 'December';
+    var months = [monthNameJanuary, monthNameFebruary, monthNameMarch, monthNameApril, monthNameMay, monthNameJune, monthNameJuly, monthNameAugust, monthNameSeptember, monthNameOctober, monthNameNovember, monthNameDecember];
+    var dayLetterSun = 'S';
+    var dayLetterMon = 'M';
+    var dayLetterTue = 'T';
+    var dayLetterWed = 'W';
+    var dayLetterThu = 'T';
+    var dayLetterFri = 'F';
+    var dayLetterSat = 'S';
+    var days = [dayLetterSun, dayLetterMon, dayLetterTue, dayLetterWed, dayLetterThu, dayLetterFri, dayLetterSat];
+    
+  </script>
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/CalendarControl.js"></script>  
+  <!-- END calendar popup -->
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/common.js"></script>   
+  <!--Help scripts-->  
+  
+  
+
+  
+  <script language="javascript" type="text/javascript">
+      function openHelp() {
+		var mapwindow = window.open('/extranet/generics/help/help.do?pageID=allocations.calendarForm.browser.title&helpID=extranet.help.accomm.allocations', 'help','scrollbars=yes,menubar=no,height=500,width=450,resizable=yes,toolbar=no,location=no,status=no');
+	  }
+  </script>
+  <!--END help scripts--> 
+  
+  
+ 
+  
+  <script language="javascript" type="text/javascript">
+      function openKey() {
+		var mapwindow = window.open('', 'key','scrollbars=yes,menubar=no,height=600,width=200,resizable=yes,toolbar=no,location=no,status=no');
+	  }
+  </script>
+
+  
+   <script language="javascript" type="text/javascript">	  
+ 		<!-- Called onLoad of body. Jumps to anchor and sets selected tab -->
+	  function init() {
+	  	//Jump to anchor on page if specified in session
+		var anchor = "null";
+		if (anchor != "null") {
+			window.parent.location.href (window.parent.location + "#" + anchor);
+			
+		} 		
+
+		//Select tab if set in tiles def
+
+		if (typeof subInit != "undefined") {
+			subInit();
+		}
+
+		// Setup the loading message for Remote Scripting.
+
+		setupLoadingMessage('Loading. Please wait...');
+	  }
+  </script>
+   <script language="javascript" type="text/javascript">	  
+ 		<!-- Called onLoad of body. Jumps to anchor and sets selected tab -->
+	  function confirmAllocationTCs() {
+	  	<!-- If we are entering an allocation page, and its time for the t and cs to be confirmed display an alert-->
+		var show = "null";
+		if (show != "null" && show == "true") {
+			var show_text = "null";		
+			if (show_text != null) {
+				alert(show_text);
+			}
+			
+			
+		} 		
+	  }
+  </script>
+
+
+
+
+  <!-- Begin of DWR Scripts -->
+
+  
+  
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/dwr/engine.js"></script>  
+  <script type="text/javascript" language="JavaScript" src="/extranet/dwr/util.js"></script>  
+
+  <script language="javascript">
+	/**
+	 * Setup a loading message.
+	 */
+	function setupLoadingMessage(message) {
+
+		var loadingMessage;
+
+		if (message) {
+			loadingMessage = message;
+		} else {
+			loadingMessage = "Loading";
+		}
+
+		DWREngine.setPreHook(
+			function() {
+				var disabledZone = $('disabledZone');
+				if (!disabledZone) {
+					disabledZone = document.createElement('div');
+					disabledZone.setAttribute('id', 'disabledZone');
+					disabledZone.style.position = "absolute";
+					disabledZone.style.zIndex = "1000";
+					disabledZone.style.left = "0px";
+					disabledZone.style.top = "0px";
+					disabledZone.style.width = "100%";
+					disabledZone.style.height = "100%";
+					document.body.appendChild(disabledZone);
+					var messageZone = document.createElement('div');
+					messageZone.setAttribute('id', 'messageZone');
+					messageZone.style.position = "absolute";
+					messageZone.style.top = "30px";
+					messageZone.style.left = "250px";
+					messageZone.style.background = "white";
+					messageZone.style.color = "#273C72";
+					messageZone.style.fontFamily = "Verdana, Arial,Helvetica,sans-serif";
+					messageZone.style.fontWeight = "bold";
+					messageZone.style.padding = "4px";
+					disabledZone.appendChild(messageZone);
+					var text = document.createTextNode(loadingMessage);
+					messageZone.appendChild(text);
+				} else {
+					$('messageZone').innerHTML = loadingMessage;
+					disabledZone.style.visibility = 'visible';
+				}
+			}
+		);
+
+		DWREngine.setPostHook(function() {
+			$('disabledZone').style.visibility = 'hidden';
+		});
+	}
+  </script>
+
+  <!-- End of DWR Scripts -->
+
+  <!-- Location Selector -->
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/LocationSelector.js"></script>  
+
+  <!-- Remote Scripting Search -->
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/RSSearch.js"></script>  
+
+
+</head>
+
+
+ <body onload="init();confirmAllocationTCs()">
+  <table width="100%">	
+  	
+  		
+  		
+	 		<tr valign="top">
+  				<td colspan="2" valign="bottom">
+					
+					<a href="http://www.lastminute.com">
+						<img src="/extranet/images/logo.gif" height="46" width="191" align="bottom" class="float_left" alt="lastminute.com" />
+					</a>
+					<a href="http://www.lastminute.com">
+						<img src="/extranet/images/logo.gif" height="46" width="191" align="bottom" class="float_right" alt="lastminute.com" />
+					</a>
+	 			</td>
+ 			</tr>
+ 		
+ 	
+
+    <tr valign="top">
+        
+        
+ 		  	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	function changeSelectedProduct(select) {
+
+		if (select.selectedIndex == 0) {
+			window.location = '/extranet/generics/homepage/accomm/homepage.do';
+		} else if (select.selectedIndex == 1) {
+			window.location = '/extranet/generics/homepage/transfer/homepage.do';
+		} else if (select.selectedIndex == 2) {
+			window.location = '/extranet/gift/order/list.do?mode=Display';
+		}
+	}
+</script>
+
+
+
+
+
+<td>
+	<table width="140px">
+		<tr valign="top">
+			<td>
+				<div class="container background_1">
+					<div class='topMiddle'>
+						<div class="topLeft">
+							<div class="topRight">
+								&nbsp;
+							</div>
+						</div>
+					</div>
+						
+						<div id='menu'>
+	
+	
+		
+			
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script language="javascript">
+		function popUpContactUs() {
+				var popup = window.open('/extranet/common/contact_us.html', 'contactus','scrollbars=no,menubar=no,height=600,width=600,resizable=no,toolbar=no,location=no,status=no');
+		}
+</script>
+
+<ul id="leftNav" class="content">
+	
+	
+	
+		<li>			
+			
+      		
+			<a href="/extranet/accomm/booking/paginatedlist.do?withBookings=U&clearSearch=true&autoSearch=true">Home</a>
+		</li>	    	
+	
+	
+
+		
+			<LI>
+				
+	      	
+		      	Applications
+	      	
+    	
+    		<ul>
+    			<!-- Application form without approval for non HBU/admin/contractor users -->
+    			
+	    			<LI>
+			      		
+				    	<a href="/extranet/generics/nologon/application/newexternal.do">submit application</a>  
+			      	</LI>
+		      	
+    			<!-- Application form with approval for HBU/admin users -->
+    		    
+		      	
+		      	<li>
+					 
+				    <a href="/extranet/accomm/application/suggesthotel.do">suggest hotel</a>  
+		      	</li>
+		      	
+		      	
+			</ul>
+		</li>		 
+	
+	
+	<li>
+		
+					
+				  	<a href="/extranet/accomm/property/managementlist.do?mode=Display">Properties</a>  
+		
+		
+		<ul>
+			
+				      
+				<li>
+					
+			    	<a href="/extranet/accomm/allocations/managementlist/all.do?mode=Display">allocations</a>  
+				</li>
+			
+			
+			
+			</ul>
+		</li>	
+
+		
+			<li>
+				
+    		  	<a href="/extranet/accomm/booking/paginatedlist.do?clearSearch=true&mode=Display">Bookings</a>  
+
+			<ul>
+				<li>
+			      	
+    				
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=C&clearSearch=true&autoSearch=true&mode=NewSearch">confirmed</a>  
+	    		</li>
+	    		<li>
+			      	
+	      			
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=U&clearSearch=true&autoSearch=true&mode=NewSearch">unconfirmed</a>
+		    	</li>
+				<li>
+	      			
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=X&clearSearch=true&autoSearch=true&mode=NewSearch">cancelled</a>
+	  			</li>
+		    	</ul>
+		    </li>
+					
+
+					
+
+		<li>
+			Maintenance
+			
+			<ul>
+				
+				<li>	
+					 
+		    	   	<a href="/extranet/generics/security/changepassword.do">change password</a>
+	        	</li>
+
+				
+					<li>	        
+						 
+					    <a href="/extranet/generics/users/list.do">user management</a>  
+		   			</li>
+    				
+    			
+			
+	        
+			
+		</ul>
+	</li>
+	<!--  Live chat links-->
+	
+	
+	
+	
+		   
+	<li>
+			Support
+			<ul>
+				<li>
+					<a href="https://extranet.lastminute.com/training/" target="_training">
+						training guides
+					</a>
+	        	</li>
+			</ul>
+			<ul>
+				<li>
+					<!--contact us -->
+					
+					<a href="javascript:popUpContactUs();">contact us</a>					
+						
+
+	        	</li>
+			</ul>
+			<ul>
+				<li>
+					<!-- Live chat text link -->
+					<a href="http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels" target="chat55013756"
+                        onClick="javascript:window.open('http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels&referrer='+escape(document.location),'chat55013756','width=472,height=320');return false;">					   live chat
+					</a>
+	        	</li>
+			</ul>
+			
+			
+	</li>
+
+	<!--  Live chat graphic -->
+	<a href="http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels"  target="chat55013756" onClick="javascript:window.open('http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels&referrer='+escape(document.location),'chat55013756','width=472,height=320');return false;">
+	  <img src="https://server.iad.liveperson.net/hc/55013756/?cmd=repstate&site=55013756&channel=web&&ver=1&imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels" height="36" width="100" border="0">
+	</a>
+		
+	<li>
+		 
+    	<a href="/extranet/logout.do">Logout</a>
+	</li>
+</ul>
+
+
+			
+		
+		
+		
+	
+	
+	
+	
+	
+					</div>
+					<div class='bottomMiddle'>
+					<div class="bottomLeft">
+						<div class="bottomRight">
+							&nbsp;
+						</div>
+					</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</td>
+
+
+
+ 		
+      <td width = "95%"  align="left">
+      
+   		  
+   		  	
+   		  	
+   		  	   		  	
+   		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+	
+  
+
+<table width="100%">
+<tr>
+<td>
+
+<div class='container background_1'><div class='topMiddle'><div class='topLeft'><div class='topRight'>&nbsp;</div></div></div><div class='content'>
+
+	<table width="100%">
+		<tr>
+			<td>
+				<div class="crumbtrail">
+					allocations
+					&gt;
+					<span class="selected">
+						allocation calendar
+					</span>
+							
+					
+						&gt; Las Ramblas Apartments
+						(1068401)
+															
+					
+				</div>
+			</td>
+			<td valign="middle" align="right">
+				<div class="helplink">
+					
+					<a href="javascript:openHelp();"><img src="/extranet/images/ico_tools_help.gif" height="15" width="19" alt="Help"></a>
+					<a href="javascript:openHelp();">Help</a>
+				</div>
+
+			</td>
+		</tr>
+		
+			
+				<!-- Insert specific nav shortcuts for each product for generic pages to choose the appropriate one -->
+				
+				  	
+								  	
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+  		
+  		
+  	
+  
+  
+  
+	
+ <!-- URLS for pages -->
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+ 
+
+	<tr>
+		<td colspan="2" align="center" class="topline">
+		<div id="minitabs">
+			<ul>
+				<li><a href="/extranet/accomm/property/description.do?productId=1068401" id="tabDescription" class="inactive">details</a></li>
+				<li><a href="/extranet/accomm/property/contactdetails/update/start.do?productId=1068401" id="tabContacts" class="inactive">contacts</a></li>
+				<li><a href="/extranet/generics/supplier/supplierdetails.do?productId=1068401" id="tabSupplier" class="inactive">finance</a></li>
+				<li><a href="/extranet/accomm/property/propertydetails.do?productId=1068401&mode=Display" id="tabFacilities" class="inactive">description</a></li>
+				<li><a href="/extranet/accomm/property/furtherinformation.do?productId=1068401" id="tabFurtherInfo" class="inactive">further info</a></li>
+				<li><a href="/extranet/accomm/property/images.do?productId=1068401" id="tabImages" class="inactive">images</a></li>
+				<li><a href="/extranet/accomm/property/submit.do?productId=1068401" id="tabSubmit" class="inactive">
+  					
+						
+							 submit changes
+						
+						
+					
+				</a></li>
+				
+															
+							
+								<li><a href="/extranet/accomm/unit/unitlist.do?productId=1068401" id="tabRooms" class="active">inventory/rates</a></li>
+							
+				
+
+				<li><a href="/extranet/generics/product/displayreviews.do?productId=1068401" id="tabReviews" class="inactive">reviews</a></li>				
+
+								
+			</ul>
+		</div>									
+		</td>
+	</tr>
+
+			
+		
+	</table>
+	
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+
+</td>
+</tr>
+</table>
+
+		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- show global errors -->
+	
+
+
+
+
+
+		  
+		       
+		       
+		       
+		       
+    		        
+		       
+    		        
+    		            		   
+		       
+    		        
+		            
+    		        
+		        
+		        		       
+		       
+ 		             		       
+		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<SCRIPT LANGUAGE="javascript">
+   function stopSaleWarn(val){
+	  var flag=document.forms[0].alertCheck.value;
+	   if(flag=='true' && val=='true'){
+        alert("Stop sale will only apply to new bookings, existing bookings will be honoured");
+       }
+      	document.forms[0].alertCheck.value=false;
+   } 
+   
+	function hiliteUnsavedRow(id) { 
+		document.getElementById(id).style.backgroundColor="#FF9999"; 
+		document.forms[0].rowUpdate.value = 'true';				
+	} 
+
+    function checkLargeRateChange(newValue, originalValue) {
+
+	    var percentageLimit = document.forms[0].largeChangeWarningPercentage.value;
+	
+		// need to validate before any calculations
+		var newVal = parseFloat(newValue);
+		var originalVal = parseFloat(originalValue);
+		var limitPerc = parseFloat(percentageLimit);
+
+		if (isNaN(newVal) || isNaN(originalVal) || isNaN(limitPerc)
+		|| originalVal == null || originalVal == 0) {
+			return;
+		}
+
+		var percentageChange = ((newVal - originalVal) / originalVal) * 100;
+		
+		if (percentageChange < 0) {
+			percentageChange = percentageChange * -1;
+		}
+
+		if (percentageChange > limitPerc) {
+            alert("WARNING - Large rate change made, (over 60% difference).  Click OK to continue.");		
+        }           
+
+    }
+
+
+    function warnSave() {
+
+        var flag=document.forms[0].saveAlert.value;
+        if(flag=='true'){
+            alert("Please ensure you save your changes by clicking the update button at the bottom of the page");
+        }           
+        document.forms[0].saveAlert.value=false;   
+    }
+
+	function changeMonth(month, year) {
+		var agree = true;
+
+		var flag=document.forms[0].rowUpdate.value;
+		flag=false;
+	  	if (flag == 'true') {	
+			agree = confirm("WARNING - the changes you have made for this month have not been saved.  To save, click Cancel, followed by update. To continue without saving, click Continue ");
+		}	
+
+		if (agree){
+			document.forms[0].selectedMonth.value = month;
+			document.forms[0].selectedYear.value = year;
+			document.forms[0].priorityMode.value = 'ShowMonth';						
+			document.forms[0].submit();
+		}
+
+	}
+
+</Script>
+
+
+
+<form id="allocationCalendarForm" method="post" action="/extranet/accomm/allocations/allocationcalendar.do"><div><input type="hidden" name="org.apache.struts.taglib.html.TOKEN" value="049506d73a3cfdc121d32a74c8f9c1f2" /></div>
+
+<input type="hidden" name="alertCheck" value="true"/>
+<input type="hidden" name="saveAlert" value="true"/>
+<input type="hidden" name="selectedDate" value="" />
+<input type="hidden" name="allocationId" value="940490" />
+<input type="hidden" name="productId" value="1068401" />
+<input type="hidden" name="accommUnitId" value="108914" />
+<input type="hidden" name="selectedMonth" value="8" />
+<input type="hidden" name="selectedYear" value="2010" />
+<input type="hidden" name="priorityMode" value="" />
+<input type="hidden" name="rowUpdate" value="false" />
+<input type="hidden" name="largeChangeWarningPercentage" value="60" />
+
+<div class="container">
+	<div class="topLeft title">
+		<div class="topRight">
+			Allocation Calendar
+		</div>
+	</div>
+	<div class="content" style="padding:3px;">
+			<table width="100%">
+				<tr>
+					<td colspan="3">
+						<strong class="t1">
+							Allocation calendar for room type
+						</strong>							
+							&nbsp;
+						<label>
+							
+								Standard Family (108914)
+									
+									&nbsp;with&nbsp;
+									
+										Internet Access
+									
+										,&nbsp;City View
+									
+										,&nbsp;WiFi in lobby
+									
+								
+							
+						</label>						
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<label>
+							<strong>
+							All prices in
+							Euro
+							</strong>
+						</label>
+					</td>	
+	
+					<td align="left">
+						<strong class="t1">Pricing method</strong>
+							&nbsp;
+						<label>Per Unit</label>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+			
+				<tr>
+					<td valign="middle">
+						<label><strong>
+							Basic rate type
+						</strong></label>
+						
+						
+						<label>
+							
+								COM
+							
+							
+						</label>			
+					</td>		
+					<td>
+						<label>
+							<strong>commission (%)&nbsp;</strong>
+							20.00</label>
+						
+					</td>			
+					<td>
+						<label>
+							<strong>DP commission (%)&nbsp;</strong>
+							20.00</label>
+						
+					</td>			
+				</tr>
+				
+				<tr>
+					<td>
+						<label><strong>Property min rate:&nbsp;</strong>18.00</label>
+					</td>	
+					
+						<td colspan="1" align="left">
+							<label><strong>Room type min rate:&nbsp;</strong>69.00</label>
+						</td>												
+					
+					<td colspan="2" align="right">
+						
+							
+							
+								
+			                    <label><a href="/extranet/accomm/allocations/addamendallocationperiod.do?mode=Display&allocationId=940490&accommUnitId=108914&productId=1068401">view allocation</a></label>					
+							
+						
+
+					</td>	
+				</tr>						
+    	</table>
+		<br/>
+		<table width="100%">
+			<tr>
+				<td>
+				   <div id="page_tab_header"> 
+				     <ul>
+						
+							
+						
+							
+						
+							<li><a href="javascript:changeMonth('6','2010')">&lt; 
+								Jun&nbsp;2010
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('7','2010')">
+								Jul&nbsp;2010
+							</a></li>
+						
+							<li id="current"><a href="javascript:changeMonth('8','2010')">
+								Aug&nbsp;2010
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('9','2010')">
+								Sep&nbsp;2010
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('10','2010')">
+								Oct&nbsp;2010
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('11','2010')">
+								Nov&nbsp;2010
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('12','2010')">
+								Dec&nbsp;2010
+							 &gt;</a></li>
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+					 </ul>
+				  </div>
+				  <div id="page_tabs_reset"></div>
+				</td>
+			</tr>
+		</table>
+		<table cellspacing="0" width="100%" class="result">
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				  	
+				  	
+						
+						
+						<thead>
+						<tr>
+							<td align="center">
+								
+									
+											        
+										<a href='/extranet/accomm/allocations/allocationcalendar.do?mode=CloseAllChilds&amp;productId=1068401&amp;allocationId=940490&amp;accommUnitId=108914'><img src="/extranet/images/ico_nodeExpanded_opaque.gif" alt="close all offers" />
+										</a>
+									
+									
+								
+				    		</td>									
+							<td align="center">date</td>
+							<td align="center">day</td>
+							<td align="center">to sell</td>
+							<td align="center">sold</td>
+							
+								<td colspan="2" align="center">
+									Standard Rate								
+								</td>
+								
+							
+							<td align="center">stop sales</td>
+							<td align="center">release days</td>
+							<td align="center">min stay</td>							
+							<td align="center">Board Basis</td>
+							<td align="center">Offer Type</td>
+							<td align="center">audit</td>
+						</tr>
+						</thead>
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row122'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					1
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1280620800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row123'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					2
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1280707200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row124'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					3
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1280793600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row125'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					4
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1280880000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row126'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					5
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1280966400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row127'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					6
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												140.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281052800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281052800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row128'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					7
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												170.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281139200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281139200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row129'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					8
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												170.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281225600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281225600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row130'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					9
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												170.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281312000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							1&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281312000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row131'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					10
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												170.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281398400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281398400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row132'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					11
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							1
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												170.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281484800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281484800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row133'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					12
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							1
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281571200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281571200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row134'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					13
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							1
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281657600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281657600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row135'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					14
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							1
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281744000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281744000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row136'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					15
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281830400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281830400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row137'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					16
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1281916800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1281916800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+						
+                            
+												
+												
+						
+  				  	
+                  <tr bgcolor="#CCCCCC" id='row138'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					17
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												130.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282003200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							true
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282003200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row139'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					18
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												99.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282089600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282089600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row140'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					19
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+									
+									&nbsp;
+								
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+										
+											
+																						
+												99.00
+											
+										
+									
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282176000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+							false
+						
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+				<td align="center">
+					
+						
+							2&nbsp;
+						
+						
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282176000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+						
+                            
+												
+						
+  				  	
+                  <tr bgcolor="#FF9912" id='row141'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					20
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[141].remainingUnits" maxlength="3" size="3" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row141');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[141].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row141');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282262400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[141].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[141].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[141].stopSales'].value == 'true') {forms[0]['calendar.dates[141].stopSales'].value = 'false'} else {forms[0]['calendar.dates[141].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[141].stopSales'].value);hiliteUnsavedRow('row141');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[141].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row141');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[141].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row141');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282262400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+						
+                            
+												
+						
+  				  	
+                  <tr bgcolor="#FF9912" id='row142'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					21
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[142].remainingUnits" maxlength="3" size="3" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row142');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[142].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row142');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282348800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[142].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[142].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[142].stopSales'].value == 'true') {forms[0]['calendar.dates[142].stopSales'].value = 'false'} else {forms[0]['calendar.dates[142].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[142].stopSales'].value);hiliteUnsavedRow('row142');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[142].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row142');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[142].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row142');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282348800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row143'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					22
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[143].remainingUnits" maxlength="3" size="3" value="1" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row143');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[143].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row143');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282435200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[143].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[143].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[143].stopSales'].value == 'true') {forms[0]['calendar.dates[143].stopSales'].value = 'false'} else {forms[0]['calendar.dates[143].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[143].stopSales'].value);hiliteUnsavedRow('row143');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[143].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row143');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[143].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row143');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282435200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row144'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					23
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[144].remainingUnits" maxlength="3" size="3" value="1" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row144');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[144].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row144');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282521600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[144].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[144].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[144].stopSales'].value == 'true') {forms[0]['calendar.dates[144].stopSales'].value = 'false'} else {forms[0]['calendar.dates[144].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[144].stopSales'].value);hiliteUnsavedRow('row144');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[144].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row144');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[144].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row144');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282521600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row145'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					24
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[145].remainingUnits" maxlength="3" size="3" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row145');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[145].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row145');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282608000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[145].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[145].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[145].stopSales'].value == 'true') {forms[0]['calendar.dates[145].stopSales'].value = 'false'} else {forms[0]['calendar.dates[145].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[145].stopSales'].value);hiliteUnsavedRow('row145');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[145].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row145');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[145].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row145');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282608000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row146'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					25
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[146].remainingUnits" maxlength="3" size="3" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row146');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[146].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row146');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282694400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[146].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[146].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[146].stopSales'].value == 'true') {forms[0]['calendar.dates[146].stopSales'].value = 'false'} else {forms[0]['calendar.dates[146].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[146].stopSales'].value);hiliteUnsavedRow('row146');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[146].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row146');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[146].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row146');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282694400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row147'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					26
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[147].remainingUnits" maxlength="3" size="3" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row147');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[147].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row147');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282780800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[147].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[147].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[147].stopSales'].value == 'true') {forms[0]['calendar.dates[147].stopSales'].value = 'false'} else {forms[0]['calendar.dates[147].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[147].stopSales'].value);hiliteUnsavedRow('row147');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[147].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row147');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[147].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row147');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282780800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+						
+                            
+												
+						
+  				  	
+                  <tr bgcolor="#FF9912" id='row148'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					27
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[148].remainingUnits" maxlength="3" size="3" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row148');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[148].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row148');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282867200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[148].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[148].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[148].stopSales'].value == 'true') {forms[0]['calendar.dates[148].stopSales'].value = 'false'} else {forms[0]['calendar.dates[148].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[148].stopSales'].value);hiliteUnsavedRow('row148');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[148].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row148');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[148].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row148');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282867200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+						
+                            
+												
+						
+  				  	
+                  <tr bgcolor="#FF9912" id='row149'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					28
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[149].remainingUnits" maxlength="3" size="3" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row149');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[149].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row149');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1282953600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[149].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[149].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[149].stopSales'].value == 'true') {forms[0]['calendar.dates[149].stopSales'].value = 'false'} else {forms[0]['calendar.dates[149].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[149].stopSales'].value);hiliteUnsavedRow('row149');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[149].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row149');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[149].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row149');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1282953600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row150'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					29
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[150].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row150');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[150].ratesById(2).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row150');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1283040000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[150].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[150].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[150].stopSales'].value == 'true') {forms[0]['calendar.dates[150].stopSales'].value = 'false'} else {forms[0]['calendar.dates[150].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[150].stopSales'].value);hiliteUnsavedRow('row150');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[150].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row150');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[150].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row150');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row151'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					30
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[151].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row151');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[151].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row151');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1283126400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[151].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[151].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[151].stopSales'].value == 'true') {forms[0]['calendar.dates[151].stopSales'].value = 'false'} else {forms[0]['calendar.dates[151].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[151].stopSales'].value);hiliteUnsavedRow('row151');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[151].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row151');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[151].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row151');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row152'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					31
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[152].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row152');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[152].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row152');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1283212800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[152].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[152].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[152].stopSales'].value == 'true') {forms[0]['calendar.dates[152].stopSales'].value = 'false'} else {forms[0]['calendar.dates[152].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[152].stopSales'].value);hiliteUnsavedRow('row152');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[152].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row152');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[152].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row152');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+
+			
+			
+			<tbody><tr class="footer"><td colspan='13'>&nbsp;</td></tbody>				
+		</table>
+
+		
+		  <table width="100%">
+			<tr>
+				<td align="left">
+					<input type="submit" name="mode" value="cancel" class="submit" />
+				</td>
+				<td>
+					&nbsp;
+				</td>
+				<td align="right">
+					
+						<input type="submit" name="mode" value="update" class="submit" />    
+					
+				</td>   
+			</tr>  
+		  </table>
+		
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+&nbsp;	    	
+
+<div class="container">
+	<div class="topLeft title">
+		<div class="topRight">
+			Key
+		</div>
+	</div>
+	<div class="content">		  
+			  <table>
+				<tr>
+					<td style="color:blue;text-decoration:underline;">
+						wed
+					</td>
+					<td>
+						<label>
+							Part of a promotional stay (click to view details)
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#FF9999">&nbsp;</td>
+				    <td>
+						<label>
+							Changed value, not yet saved
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#FFFFCC" >&nbsp;</td>
+					<td>
+						<label>
+							On request allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCFFCC">&nbsp;</td>
+					<td>
+						<label>
+							Free sale allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCCCFF">&nbsp;</td>
+					<td>
+						<label>
+							Auto free sale allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCCCCC">&nbsp;</td>
+					<td>
+						<label>
+							Date closed out
+						</label>
+					</td>
+				</tr>				
+				<tr>
+					<td bgcolor="#FF9912">&nbsp;</td>
+					<td>
+						<label>
+							Date sold out 
+						</label>
+					</td>
+				</tr>				
+			  </table>
+			
+			
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+&nbsp;
+
+</form>
+
+      </td>
+    </tr>
+	<tr>
+	  <td colspan="2">
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </td>
+    </tr>  
+  </table>
+  
+  <!-- BEGIN HumanTag Monitor. DO NOT MOVE! MUST BE PLACED JUST BEFORE THE /BODY TAG -->
+  <script language='javascript' src='https://server.iad.liveperson.net/hc/55013756/x.js?cmd=file&file=chatScript3&site=55013756&&imageUrl=https://extranet.lastminute.com/extranet/images/livechat'> 
+  </script>
+  <!-- END HumanTag Monitor. DO NOT MOVE! MUST BE PLACED JUST BEFORE THE /BODY TAG -->
+  
+  <!--  Omniture tracking -->
+  <script language="JavaScript" type="text/javascript">
+    	var s_channel  = 'MagentA';
+		var s_prop2    = 'no-user';
+	    //Force language to english for consistent page names
+		var s_pageName = s_channel+' :: ' + 'allocations - allocation calendar';
+		
+	    	s_prop2    = 'lasramblas';
+	    
+  </script>
+  <script type="text/javascript" language="JavaScript" src="https://www.lastminute.com/site/s_code_remote_lastminuteinternal.js">
+  </script>
+  <!-- ---------------- -->
+  
+</body>
+</html>

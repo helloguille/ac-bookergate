@@ -1,15 +1,12 @@
 <?php
-require_once("lib/phpQuery.php");
 
-class BookerGate_sitem {
-	private $username = "agent";
-	private $password = "11madrid11";
+class Access_Siteminder {
 
-
-	private $referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
 	function __construct() {
+		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie.sv";
-
+		$this->username = "agent";
+		$this->password = "11madrid11";
 	}
 	private function init_curl($url, $method = 1) {
 		$curl_dscr = curl_init($url);

@@ -1,7 +1,6 @@
 <?
-require_once("lib/phpQuery.php");
 
-function sitem_parse_ids($fn) {
+function fetchid_Siteminder($fn) {
 	$arr = array();
 
 	$html = phpQuery::newDocument($fn);
