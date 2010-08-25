@@ -2,11 +2,21 @@
 
 class Access_Siteminder {
 
-	function __construct() {
+	function __construct($property = null) {
+		
+		if (!is_null($property)) { 
+			$data = $property->getData("siteminder");
+			$this->username = $data->user;
+			$this->password = $data->password;
+			$this->ext_siteminder_iHotelier = $property->ext_siteminder_iHotelier;
+		}else {
+			$this->username = "agent";
+			$this->password = "11madrid11";		
+			$this->ext_siteminder_iHotelier = 41;
+		}
+		
 		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie.sv";
-		$this->username = "agent";
-		$this->password = "11madrid11";
 	}
 	private function init_curl($url, $method = 1) {
 		$curl_dscr = curl_init($url);
@@ -45,7 +55,7 @@ class Access_Siteminder {
 	}
 
 	function fetch($date) {
-		$url_fetch = "https://www.siteminder.co.uk/hoteliers/inventory/editInventory.do?hotelierId=41&showStopSells=&showMinStays=&fromDate=".$date."&scrollDirection=REFRESH&scrollDays=0&scrollTop=114";
+		$url_fetch = "https://www.siteminder.co.uk/hoteliers/inventory/editInventory.do?hotelierId=".$this->ext_siteminder_iHotelier."&showStopSells=&showMinStays=&fromDate=".$date."&scrollDirection=REFRESH&scrollDays=0&scrollTop=114";
 
 		$ch = $this->init_curl($url_fetch, 0);
 
@@ -54,7 +64,10 @@ class Access_Siteminder {
 
 		return $info;
 	}
-
+	function send_stock($cells) {
+		$cells["hotelierId"] = $this->ext_siteminder_iHotelier;
+		return $this->send_post($cells);
+	}
 	function send_post($mixed) {
 		$url_post = "https://www.siteminder.co.uk/hoteliers/inventory/updateInventory.rpc";
 		$post = '';
