@@ -2,17 +2,17 @@
 
 class Access_Siteminder {
 
-	function __construct($property = null) {
+	function __construct($ro = null) {
 		
-		if (!is_null($property)) { 
-			$data = $property->getData("siteminder");
-			$this->username = $data->user;
-			$this->password = $data->password;
-			$this->ext_siteminder_iHotelier = $property->ext_siteminder_iHotelier;
-		}else {
-			$this->username = "agent";
-			$this->password = "11madrid11";		
-			$this->ext_siteminder_iHotelier = 41;
+		if (is_object($ro)) { 
+			$data = $ro->getExternalSyncDetails("siteminder");
+			$this->username = $data["username"];
+			$this->password = $data["password"];
+			$this->ext_siteminder_iHotelier = $data["siteminder_iHotelier"];
+			print_r($data);
+		}
+		else {
+			return false;
 		}
 		
 		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
@@ -39,8 +39,8 @@ class Access_Siteminder {
 	}
 
 	function login() {
-		$url_login = "https://www.siteminder.co.uk/hoteliers/j_acegi_security_check";
-
+		$url_login = "https://www.siteminder.co.uk/hoteliers/j_acegi_security_check";	
+		
 		$ch = $this->init_curl($url_login, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "j_password=".$this->password."&j_username=".$this->username."&x=0&y=0");
 
@@ -78,7 +78,7 @@ class Access_Siteminder {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post, 1));
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
-
+echo $info;
 		/*$info = trim($info, "{}");
 		$result = explode(',', $info);
 		$result = explode(':', $result[0]);
