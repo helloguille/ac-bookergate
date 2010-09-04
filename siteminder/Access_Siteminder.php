@@ -11,8 +11,13 @@ class Access_Siteminder {
 			$this->ext_siteminder_iHotelier = $data["siteminder_iHotelier"];
 			print_r($data);
 		}
-		else {
-			return false;
+		elseif (is_null($ro)) {
+			/*
+				This is the configuration used for testing
+			*/
+			$this->username = "agent";
+			$this->password = "11madrid11";		
+			$this->ext_siteminder_iHotelier = 41;
 		}
 		
 		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
