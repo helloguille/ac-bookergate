@@ -51,7 +51,6 @@ class Access_Lastminute {
 
 		return $status;
 	}
-
 	function fetch($year, $month) {
 		$url_fetch = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do";
 		$post = "alertCheck=true&rowUpdate=false&accommUnitId=108914&allocationId=940490&productId=1068401&priorityMode=ShowMonth&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
@@ -64,7 +63,9 @@ class Access_Lastminute {
 
 		return $info;
 	}
-
+	function send_stock($year, $month, $mixed) {
+		return $this->send_post($year, $month, $mixed);
+	}
 	function send_post($year, $month, $mixed) {
 		$url_post = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do";
 		$post = "alertCheck=true&mode=update&rowUpdate=true&accommUnitId=108914&allocationId=940490&productId=1068401&priorityMode=&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
@@ -90,7 +91,8 @@ class Access_Lastminute {
 				$to_sell = trim(pq($tr)->find('input[name$=".remainingUnits"]')->val());
 				$rate = trim(pq($tr)->find('input[name$=".ratesById(2).rateActual"]')->val());
 
-				if ( $updated[$row_id]['to_sell'] == $to_sell && $updated[$row_id]['rate'] == $rate ) unset($updated[$row_id]);
+				// if ( $updated[$row_id]['to_sell'] == $to_sell && $updated[$row_id]['rate'] == $rate ) unset($updated[$row_id]);
+				if ( $updated[$row_id]['to_sell'] == $to_sell) unset($updated[$row_id]);
 			}
    	}
 		phpQuery::unloadDocuments();
