@@ -24,7 +24,7 @@
 									"338" => array('to_sell' => 55, 'rate' => '155'));
 	*/
 		$res = $hw->send_post('2011', '3', $new_values);
-		var_dump($hw->check($new_values, $res));
+		var_dump($hw->check($new_values, $hw->fetch('2011', '3')));
 	}
 	else {
 		echo "Could not login";	

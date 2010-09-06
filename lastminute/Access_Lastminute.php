@@ -3,7 +3,9 @@
 class Access_Lastminute {
 
 
-	function __construct() {
+	function __construct($ro = null, $stockupdate = null) {
+		$this->stockupdate = $stockupdate;
+
 		$this->username = "lasramblas";
 		$this->password = "Bcn2010";
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie_lastminute.cookie";
@@ -66,18 +68,25 @@ class Access_Lastminute {
 	function send_stock($year, $month, $mixed) {
 		return $this->send_post($year, $month, $mixed);
 	}
+
 	function send_post($year, $month, $mixed) {
 		$url_post = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do";
 		$post = "alertCheck=true&mode=update&rowUpdate=true&accommUnitId=108914&allocationId=940490&productId=1068401&priorityMode=&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
 
-		foreach ( $mixed as $id => $val ) $post .= '&calendar.dates['.$id.'].remainingUnits='.$val['to_sell'].'&calendar.dates['.$id.'].ratesById(2).rateActual='.$val['rate'];
+		foreach ( $mixed as $id => $val ) {
+			//$post .= '&calendar.dates['.$id.'].remainingUnits='.$val['to_sell'].'&calendar.dates['.$id.'].ratesById(2).rateActual='.$val['rate'];
+			$post .= '&calendar.dates['.$id.'].remainingUnits='.$val['to_sell'];
+		}
 
 		$ch = $this->init_curl($url_post, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post, 1));
 
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
+		
+		$this->log_Event("POST", $url_post."?".$post);
 
+		// The response of this POST shows the corrent month, not the month updated so it's not usefull for a check.
 		return $info;
 	}
 
@@ -98,6 +107,15 @@ class Access_Lastminute {
 		phpQuery::unloadDocuments();
 
 		return ( count($updated) == 0 );
+	}
+	
+	/*
+		ALPHA: Sistema para logging
+	*/
+	function log_Event($description, $data) {
+		if (is_object($this->stockupdate)) {
+			$this->stockupdate->log_Event("Access_Lastminute | ".$description, $data);
+		}
 	}
 }
 
