@@ -1,0 +1,7922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+
+  
+  
+  
+  
+
+  <link href='/extranet/common/pee.css' type="text/css" rel="stylesheet"/>
+  <link href='/extranet/common/calendar.css' type="text/css" rel="stylesheet"/>  
+  <link href='/extranet/common/minitabs.css' type="text/css" rel="stylesheet"/>  
+  <link href='/extranet/common/favicon.ico' rel="shortcut icon"/>
+  
+  
+  <!-- vars for page name trail in header.jsp -->
+  
+  
+  
+  
+  <!-- Flag indicating if to show logo at top of page -->
+  
+  
+  <!-- Name of navigation tab to be selected -->
+  
+  
+  
+  <title>
+    Product Entry Extranet
+    
+    - allocations - allocation calendar
+  </title>
+
+ 
+  <!-- Calendar popup -->
+  
+  <script type="text/javascript">
+    var monthNameJanuary = 'January';
+    var monthNameFebruary = 'February';
+    var monthNameMarch = 'March';
+    var monthNameApril = 'April';
+    var monthNameMay = 'May';
+    var monthNameJune = 'June';
+    var monthNameJuly = 'July';
+    var monthNameAugust = 'August';
+    var monthNameSeptember = 'September';
+    var monthNameOctober = 'October';
+    var monthNameNovember = 'November';
+    var monthNameDecember = 'December';
+    var months = [monthNameJanuary, monthNameFebruary, monthNameMarch, monthNameApril, monthNameMay, monthNameJune, monthNameJuly, monthNameAugust, monthNameSeptember, monthNameOctober, monthNameNovember, monthNameDecember];
+    var dayLetterSun = 'S';
+    var dayLetterMon = 'M';
+    var dayLetterTue = 'T';
+    var dayLetterWed = 'W';
+    var dayLetterThu = 'T';
+    var dayLetterFri = 'F';
+    var dayLetterSat = 'S';
+    var days = [dayLetterSun, dayLetterMon, dayLetterTue, dayLetterWed, dayLetterThu, dayLetterFri, dayLetterSat];
+    
+  </script>
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/CalendarControl.js"></script>  
+  <!-- END calendar popup -->
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/common.js"></script>   
+  <!--Help scripts-->  
+  
+  
+
+  
+  <script language="javascript" type="text/javascript">
+      function openHelp() {
+		var mapwindow = window.open('/extranet/generics/help/help.do?pageID=allocations.calendarForm.browser.title&helpID=extranet.help.accomm.allocations', 'help','scrollbars=yes,menubar=no,height=500,width=450,resizable=yes,toolbar=no,location=no,status=no');
+	  }
+  </script>
+  <!--END help scripts--> 
+  
+  
+ 
+  
+  <script language="javascript" type="text/javascript">
+      function openKey() {
+		var mapwindow = window.open('', 'key','scrollbars=yes,menubar=no,height=600,width=200,resizable=yes,toolbar=no,location=no,status=no');
+	  }
+  </script>
+
+  
+   <script language="javascript" type="text/javascript">	  
+ 		<!-- Called onLoad of body. Jumps to anchor and sets selected tab -->
+	  function init() {
+	  	//Jump to anchor on page if specified in session
+		var anchor = "null";
+		if (anchor != "null") {
+			window.parent.location.href (window.parent.location + "#" + anchor);
+			
+		} 		
+
+		//Select tab if set in tiles def
+
+		if (typeof subInit != "undefined") {
+			subInit();
+		}
+
+		// Setup the loading message for Remote Scripting.
+
+		setupLoadingMessage('Loading. Please wait...');
+	  }
+  </script>
+   <script language="javascript" type="text/javascript">	  
+ 		<!-- Called onLoad of body. Jumps to anchor and sets selected tab -->
+	  function confirmAllocationTCs() {
+	  	<!-- If we are entering an allocation page, and its time for the t and cs to be confirmed display an alert-->
+		var show = "null";
+		if (show != "null" && show == "true") {
+			var show_text = "null";		
+			if (show_text != null) {
+				alert(show_text);
+			}
+			
+			
+		} 		
+	  }
+  </script>
+
+
+
+
+  <!-- Begin of DWR Scripts -->
+
+  
+  
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/dwr/engine.js"></script>  
+  <script type="text/javascript" language="JavaScript" src="/extranet/dwr/util.js"></script>  
+
+  <script language="javascript">
+	/**
+	 * Setup a loading message.
+	 */
+	function setupLoadingMessage(message) {
+
+		var loadingMessage;
+
+		if (message) {
+			loadingMessage = message;
+		} else {
+			loadingMessage = "Loading";
+		}
+
+		DWREngine.setPreHook(
+			function() {
+				var disabledZone = $('disabledZone');
+				if (!disabledZone) {
+					disabledZone = document.createElement('div');
+					disabledZone.setAttribute('id', 'disabledZone');
+					disabledZone.style.position = "absolute";
+					disabledZone.style.zIndex = "1000";
+					disabledZone.style.left = "0px";
+					disabledZone.style.top = "0px";
+					disabledZone.style.width = "100%";
+					disabledZone.style.height = "100%";
+					document.body.appendChild(disabledZone);
+					var messageZone = document.createElement('div');
+					messageZone.setAttribute('id', 'messageZone');
+					messageZone.style.position = "absolute";
+					messageZone.style.top = "30px";
+					messageZone.style.left = "250px";
+					messageZone.style.background = "white";
+					messageZone.style.color = "#273C72";
+					messageZone.style.fontFamily = "Verdana, Arial,Helvetica,sans-serif";
+					messageZone.style.fontWeight = "bold";
+					messageZone.style.padding = "4px";
+					disabledZone.appendChild(messageZone);
+					var text = document.createTextNode(loadingMessage);
+					messageZone.appendChild(text);
+				} else {
+					$('messageZone').innerHTML = loadingMessage;
+					disabledZone.style.visibility = 'visible';
+				}
+			}
+		);
+
+		DWREngine.setPostHook(function() {
+			$('disabledZone').style.visibility = 'hidden';
+		});
+	}
+  </script>
+
+  <!-- End of DWR Scripts -->
+
+  <!-- Location Selector -->
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/LocationSelector.js"></script>  
+
+  <!-- Remote Scripting Search -->
+
+  <script type="text/javascript" language="JavaScript" src="/extranet/common/RSSearch.js"></script>  
+
+
+</head>
+
+
+ <body onload="init();confirmAllocationTCs()">
+  <table width="100%">	
+  	
+  		
+  		
+	 		<tr valign="top">
+  				<td colspan="2" valign="bottom">
+					
+					<a href="http://www.lastminute.com">
+						<img src="/extranet/images/logo.gif" height="46" width="191" align="bottom" class="float_left" alt="lastminute.com" />
+					</a>
+					<a href="http://www.lastminute.com">
+						<img src="/extranet/images/logo.gif" height="46" width="191" align="bottom" class="float_right" alt="lastminute.com" />
+					</a>
+	 			</td>
+ 			</tr>
+ 		
+ 	
+
+    <tr valign="top">
+        
+        
+ 		  	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	function changeSelectedProduct(select) {
+
+		if (select.selectedIndex == 0) {
+			window.location = '/extranet/generics/homepage/accomm/homepage.do';
+		} else if (select.selectedIndex == 1) {
+			window.location = '/extranet/generics/homepage/transfer/homepage.do';
+		} else if (select.selectedIndex == 2) {
+			window.location = '/extranet/gift/order/list.do?mode=Display';
+		}
+	}
+</script>
+
+
+
+
+
+<td>
+	<table width="140px">
+		<tr valign="top">
+			<td>
+				<div class="container background_1">
+					<div class='topMiddle'>
+						<div class="topLeft">
+							<div class="topRight">
+								&nbsp;
+							</div>
+						</div>
+					</div>
+						
+						<div id='menu'>
+	
+	
+		
+			
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script language="javascript">
+		function popUpContactUs() {
+				var popup = window.open('/extranet/common/contact_us.html', 'contactus','scrollbars=no,menubar=no,height=600,width=600,resizable=no,toolbar=no,location=no,status=no');
+		}
+</script>
+
+<ul id="leftNav" class="content">
+	
+	
+	
+		<li>			
+			
+      		
+			<a href="/extranet/accomm/booking/paginatedlist.do?withBookings=U&clearSearch=true&autoSearch=true">Home</a>
+		</li>	    	
+	
+	
+
+		
+			<LI>
+				
+	      	
+		      	Applications
+	      	
+    	
+    		<ul>
+    			<!-- Application form without approval for non HBU/admin/contractor users -->
+    			
+	    			<LI>
+			      		
+				    	<a href="/extranet/generics/nologon/application/newexternal.do">submit application</a>  
+			      	</LI>
+		      	
+    			<!-- Application form with approval for HBU/admin users -->
+    		    
+		      	
+		      	<li>
+					 
+				    <a href="/extranet/accomm/application/suggesthotel.do">suggest hotel</a>  
+		      	</li>
+		      	
+		      	
+			</ul>
+		</li>		 
+	
+	
+	<li>
+		
+					
+				  	<a href="/extranet/accomm/property/managementlist.do?mode=Display">Properties</a>  
+		
+		
+		<ul>
+			
+				      
+				<li>
+					
+			    	<a href="/extranet/accomm/allocations/managementlist/all.do?mode=Display">allocations</a>  
+				</li>
+			
+			
+			
+			</ul>
+		</li>	
+
+		
+			<li>
+				
+    		  	<a href="/extranet/accomm/booking/paginatedlist.do?clearSearch=true&mode=Display">Bookings</a>  
+
+			<ul>
+				<li>
+			      	
+    				
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=C&clearSearch=true&autoSearch=true&mode=NewSearch">confirmed</a>  
+	    		</li>
+	    		<li>
+			      	
+	      			
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=U&clearSearch=true&autoSearch=true&mode=NewSearch">unconfirmed</a>
+		    	</li>
+				<li>
+	      			
+    			    <a href="/extranet/accomm/booking/paginatedlist.do?withBookings=X&clearSearch=true&autoSearch=true&mode=NewSearch">cancelled</a>
+	  			</li>
+		    	</ul>
+		    </li>
+					
+
+					
+
+		<li>
+			Maintenance
+			
+			<ul>
+				
+				<li>	
+					 
+		    	   	<a href="/extranet/generics/security/changepassword.do">change password</a>
+	        	</li>
+
+				
+					<li>	        
+						 
+					    <a href="/extranet/generics/users/list.do">user management</a>  
+		   			</li>
+    				
+    			
+			
+	        
+			
+		</ul>
+	</li>
+	<!--  Live chat links-->
+	
+	
+	
+	
+		   
+	<li>
+			Support
+			<ul>
+				<li>
+					<a href="https://extranet.lastminute.com/training/" target="_training">
+						training guides
+					</a>
+	        	</li>
+			</ul>
+			<ul>
+				<li>
+					<!--contact us -->
+					
+					<a href="javascript:popUpContactUs();">contact us</a>					
+						
+
+	        	</li>
+			</ul>
+			<ul>
+				<li>
+					<!-- Live chat text link -->
+					<a href="http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels" target="chat55013756"
+                        onClick="javascript:window.open('http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels&referrer='+escape(document.location),'chat55013756','width=472,height=320');return false;">					   live chat
+					</a>
+	        	</li>
+			</ul>
+			
+			
+	</li>
+
+	<!--  Live chat graphic -->
+	<a href="http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels"  target="chat55013756" onClick="javascript:window.open('http://server.iad.liveperson.net/hc/55013756/?cmd=file&amp;file=visitorWantsToChat&amp;site=55013756&amp;byhref=1&amp;imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels&referrer='+escape(document.location),'chat55013756','width=472,height=320');return false;">
+	  <img src="https://server.iad.liveperson.net/hc/55013756/?cmd=repstate&site=55013756&channel=web&&ver=1&imageUrl=http://cdn.lastminute.com/lmn/webcourier/en_GB/2007/01/15/hotels" height="36" width="100" border="0">
+	</a>
+		
+	<li>
+		 
+    	<a href="/extranet/logout.do">Logout</a>
+	</li>
+</ul>
+
+
+			
+		
+		
+		
+	
+	
+	
+	
+	
+					</div>
+					<div class='bottomMiddle'>
+					<div class="bottomLeft">
+						<div class="bottomRight">
+							&nbsp;
+						</div>
+					</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</td>
+
+
+
+ 		
+      <td width = "95%"  align="left">
+      
+   		  
+   		  	
+   		  	
+   		  	   		  	
+   		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+	
+  
+
+<table width="100%">
+<tr>
+<td>
+
+<div class='container background_1'><div class='topMiddle'><div class='topLeft'><div class='topRight'>&nbsp;</div></div></div><div class='content'>
+
+	<table width="100%">
+		<tr>
+			<td>
+				<div class="crumbtrail">
+					allocations
+					&gt;
+					<span class="selected">
+						allocation calendar
+					</span>
+							
+					
+						&gt; Las Ramblas Apartments
+						(1068401)
+															
+					
+				</div>
+			</td>
+			<td valign="middle" align="right">
+				<div class="helplink">
+					
+					<a href="javascript:openHelp();"><img src="/extranet/images/ico_tools_help.gif" height="15" width="19" alt="Help"></a>
+					<a href="javascript:openHelp();">Help</a>
+				</div>
+
+			</td>
+		</tr>
+		
+			
+				<!-- Insert specific nav shortcuts for each product for generic pages to choose the appropriate one -->
+				
+				  	
+								  	
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+  		
+  		
+  	
+  
+  
+  
+	
+ <!-- URLS for pages -->
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+ 
+
+	<tr>
+		<td colspan="2" align="center" class="topline">
+		<div id="minitabs">
+			<ul>
+				<li><a href="/extranet/accomm/property/description.do?productId=1068401" id="tabDescription" class="inactive">details</a></li>
+				<li><a href="/extranet/accomm/property/contactdetails/update/start.do?productId=1068401" id="tabContacts" class="inactive">contacts</a></li>
+				<li><a href="/extranet/generics/supplier/supplierdetails.do?productId=1068401" id="tabSupplier" class="inactive">finance</a></li>
+				<li><a href="/extranet/accomm/property/propertydetails.do?productId=1068401&mode=Display" id="tabFacilities" class="inactive">description</a></li>
+				<li><a href="/extranet/accomm/property/furtherinformation.do?productId=1068401" id="tabFurtherInfo" class="inactive">further info</a></li>
+				<li><a href="/extranet/accomm/property/images.do?productId=1068401" id="tabImages" class="inactive">images</a></li>
+				<li><a href="/extranet/accomm/property/submit.do?productId=1068401" id="tabSubmit" class="inactive">
+  					
+						
+							 submit changes
+						
+						
+					
+				</a></li>
+				
+															
+							
+								<li><a href="/extranet/accomm/unit/unitlist.do?productId=1068401" id="tabRooms" class="active">inventory/rates</a></li>
+							
+				
+
+				<li><a href="/extranet/generics/product/displayreviews.do?productId=1068401" id="tabReviews" class="inactive">reviews</a></li>				
+
+								
+			</ul>
+		</div>									
+		</td>
+	</tr>
+
+			
+		
+	</table>
+	
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+
+</td>
+</tr>
+</table>
+
+		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- show global errors -->
+	
+
+
+
+
+
+		  
+		       
+		       
+		       
+		       
+    		        
+		       
+    		        
+    		            		   
+		       
+    		        
+		            
+    		        
+		        
+		        		       
+		       
+ 		             		       
+		  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<SCRIPT LANGUAGE="javascript">
+   function stopSaleWarn(val){
+	  var flag=document.forms[0].alertCheck.value;
+	   if(flag=='true' && val=='true'){
+        alert("Stop sale will only apply to new bookings, existing bookings will be honoured");
+       }
+      	document.forms[0].alertCheck.value=false;
+   } 
+   
+	function hiliteUnsavedRow(id) { 
+		document.getElementById(id).style.backgroundColor="#FF9999"; 
+		document.forms[0].rowUpdate.value = 'true';				
+	} 
+
+    function checkLargeRateChange(newValue, originalValue) {
+
+	    var percentageLimit = document.forms[0].largeChangeWarningPercentage.value;
+	
+		// need to validate before any calculations
+		var newVal = parseFloat(newValue);
+		var originalVal = parseFloat(originalValue);
+		var limitPerc = parseFloat(percentageLimit);
+
+		if (isNaN(newVal) || isNaN(originalVal) || isNaN(limitPerc)
+		|| originalVal == null || originalVal == 0) {
+			return;
+		}
+
+		var percentageChange = ((newVal - originalVal) / originalVal) * 100;
+		
+		if (percentageChange < 0) {
+			percentageChange = percentageChange * -1;
+		}
+
+		if (percentageChange > limitPerc) {
+            alert("WARNING - Large rate change made, (over 60% difference).  Click OK to continue.");		
+        }           
+
+    }
+
+
+    function warnSave() {
+
+        var flag=document.forms[0].saveAlert.value;
+        if(flag=='true'){
+            alert("Please ensure you save your changes by clicking the update button at the bottom of the page");
+        }           
+        document.forms[0].saveAlert.value=false;   
+    }
+
+	function changeMonth(month, year) {
+		var agree = true;
+
+		var flag=document.forms[0].rowUpdate.value;
+		flag=false;
+	  	if (flag == 'true') {	
+			agree = confirm("WARNING - the changes you have made for this month have not been saved.  To save, click Cancel, followed by update. To continue without saving, click Continue ");
+		}	
+
+		if (agree){
+			document.forms[0].selectedMonth.value = month;
+			document.forms[0].selectedYear.value = year;
+			document.forms[0].priorityMode.value = 'ShowMonth';						
+			document.forms[0].submit();
+		}
+
+	}
+
+</Script>
+
+
+
+<form id="allocationCalendarForm" method="post" action="/extranet/accomm/allocations/allocationcalendar.do"><div><input type="hidden" name="org.apache.struts.taglib.html.TOKEN" value="c89708d96c8031050258e0575ed7cb47" /></div>
+
+<input type="hidden" name="alertCheck" value="true"/>
+<input type="hidden" name="saveAlert" value="true"/>
+<input type="hidden" name="selectedDate" value="" />
+<input type="hidden" name="allocationId" value="940490" />
+<input type="hidden" name="productId" value="1068401" />
+<input type="hidden" name="accommUnitId" value="108914" />
+<input type="hidden" name="selectedMonth" value="3" />
+<input type="hidden" name="selectedYear" value="2011" />
+<input type="hidden" name="priorityMode" value="" />
+<input type="hidden" name="rowUpdate" value="false" />
+<input type="hidden" name="largeChangeWarningPercentage" value="60" />
+
+<div class="container">
+	<div class="topLeft title">
+		<div class="topRight">
+			Allocation Calendar
+		</div>
+	</div>
+	<div class="content" style="padding:3px;">
+			<table width="100%">
+				<tr>
+					<td colspan="3">
+						<strong class="t1">
+							Allocation calendar for room type
+						</strong>							
+							&nbsp;
+						<label>
+							
+								Standard Family (108914)
+									
+									&nbsp;with&nbsp;
+									
+										Internet Access
+									
+										,&nbsp;City View
+									
+										,&nbsp;WiFi in lobby
+									
+								
+							
+						</label>						
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<label>
+							<strong>
+							All prices in
+							Euro
+							</strong>
+						</label>
+					</td>	
+	
+					<td align="left">
+						<strong class="t1">Pricing method</strong>
+							&nbsp;
+						<label>Per Unit</label>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+			
+				<tr>
+					<td valign="middle">
+						<label><strong>
+							Basic rate type
+						</strong></label>
+						
+						
+						<label>
+							
+								COM
+							
+							
+						</label>			
+					</td>		
+					<td>
+						<label>
+							<strong>commission (%)&nbsp;</strong>
+							20.00</label>
+						
+					</td>			
+					<td>
+						<label>
+							<strong>DP commission (%)&nbsp;</strong>
+							20.00</label>
+						
+					</td>			
+				</tr>
+				
+				<tr>
+					<td>
+						<label><strong>Property min rate:&nbsp;</strong>18.00</label>
+					</td>	
+					
+						<td colspan="1" align="left">
+							<label><strong>Room type min rate:&nbsp;</strong>69.00</label>
+						</td>												
+					
+					<td colspan="2" align="right">
+						
+							
+							
+								
+			                    <label><a href="/extranet/accomm/allocations/addamendallocationperiod.do?mode=Display&allocationId=940490&accommUnitId=108914&productId=1068401">view allocation</a></label>					
+							
+						
+
+					</td>	
+				</tr>						
+    	</table>
+		<br/>
+		<table width="100%">
+			<tr>
+				<td>
+				   <div id="page_tab_header"> 
+				     <ul>
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							<li><a href="javascript:changeMonth('1','2011')">&lt; 
+								Jan&nbsp;2011
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('2','2011')">
+								Feb&nbsp;2011
+							</a></li>
+						
+							<li id="current"><a href="javascript:changeMonth('3','2011')">
+								Mar&nbsp;2011
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('4','2011')">
+								Apr&nbsp;2011
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('5','2011')">
+								May&nbsp;2011
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('6','2011')">
+								Jun&nbsp;2011
+							</a></li>
+						
+							<li><a href="javascript:changeMonth('7','2011')">
+								Jul&nbsp;2011
+							 &gt;</a></li>
+						
+							
+						
+							
+						
+							
+						
+							
+						
+							
+						
+					 </ul>
+				  </div>
+				  <div id="page_tabs_reset"></div>
+				</td>
+			</tr>
+		</table>
+		<table cellspacing="0" width="100%" class="result">
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				  	
+				  	
+						
+						
+						<thead>
+						<tr>
+							<td align="center">
+								
+									
+											        
+										<a href='/extranet/accomm/allocations/allocationcalendar.do?mode=CloseAllChilds&amp;productId=1068401&amp;allocationId=940490&amp;accommUnitId=108914'><img src="/extranet/images/ico_nodeExpanded_opaque.gif" alt="close all offers" />
+										</a>
+									
+									
+								
+				    		</td>									
+							<td align="center">date</td>
+							<td align="center">day</td>
+							<td align="center">to sell</td>
+							<td align="center">sold</td>
+							
+								<td colspan="2" align="center">
+									Standard Rate								
+								</td>
+								
+							
+								<td colspan="2" align="center">
+									Package Rate								
+								</td>
+								
+							
+							<td align="center">stop sales</td>
+							<td align="center">release days</td>
+							<td align="center">min stay</td>							
+							<td align="center">Board Basis</td>
+							<td align="center">Offer Type</td>
+							<td align="center">audit</td>
+						</tr>
+						</thead>
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row334'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					1
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[334].remainingUnits" maxlength="3" size="3" value="8" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row334');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[334].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row334');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1298937600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[334].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row334');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[334].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[334].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[334].stopSales'].value == 'true') {forms[0]['calendar.dates[334].stopSales'].value = 'false'} else {forms[0]['calendar.dates[334].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[334].stopSales'].value);hiliteUnsavedRow('row334');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[334].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row334');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[334].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row334');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1298937600000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row335'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					2
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[335].remainingUnits" maxlength="3" size="3" value="9" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row335');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[335].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row335');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1299024000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[335].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row335');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[335].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[335].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[335].stopSales'].value == 'true') {forms[0]['calendar.dates[335].stopSales'].value = 'false'} else {forms[0]['calendar.dates[335].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[335].stopSales'].value);hiliteUnsavedRow('row335');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[335].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row335');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[335].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row335');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1299024000000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row336'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					3
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[336].remainingUnits" maxlength="3" size="3" value="10" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row336');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[336].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row336');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1299110400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[336].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row336');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[336].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[336].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[336].stopSales'].value == 'true') {forms[0]['calendar.dates[336].stopSales'].value = 'false'} else {forms[0]['calendar.dates[336].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[336].stopSales'].value);hiliteUnsavedRow('row336');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[336].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row336');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[336].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row336');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1299110400000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row337'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					4
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[337].remainingUnits" maxlength="3" size="3" value="9" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row337');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[337].ratesById(2).rateActual" maxlength="10" size="5" value="144.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '144.00');hiliteUnsavedRow('row337');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1299196800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[337].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row337');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[337].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[337].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[337].stopSales'].value == 'true') {forms[0]['calendar.dates[337].stopSales'].value = 'false'} else {forms[0]['calendar.dates[337].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[337].stopSales'].value);hiliteUnsavedRow('row337');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[337].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row337');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[337].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row337');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1299196800000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row338'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					5
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[338].remainingUnits" maxlength="3" size="3" value="8" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row338');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[338].ratesById(2).rateActual" maxlength="10" size="5" value="155.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '155.00');hiliteUnsavedRow('row338');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+										<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=2565956&auditQuery=allocation_rate_override&auditDateParamKey=1299283200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+									
+									
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[338].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row338');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[338].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[338].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[338].stopSales'].value == 'true') {forms[0]['calendar.dates[338].stopSales'].value = 'false'} else {forms[0]['calendar.dates[338].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[338].stopSales'].value);hiliteUnsavedRow('row338');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[338].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row338');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[338].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row338');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+							<pee:block name='fieldaudit'><a href="javascript:openFieldAudit('/extranet/generics/product/fieldaudit.do?productId=1068401&auditKey=940490&auditQuery=allocation_override&auditDateParamKey=1299283200000')"><img src='/extranet/images/ico_search.gif' border='0' /></a></pee:block>
+						
+						
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row339'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					6
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[339].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row339');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[339].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row339');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[339].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row339');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[339].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[339].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[339].stopSales'].value == 'true') {forms[0]['calendar.dates[339].stopSales'].value = 'false'} else {forms[0]['calendar.dates[339].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[339].stopSales'].value);hiliteUnsavedRow('row339');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[339].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row339');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[339].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row339');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row340'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					7
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[340].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row340');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[340].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row340');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[340].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row340');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[340].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[340].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[340].stopSales'].value == 'true') {forms[0]['calendar.dates[340].stopSales'].value = 'false'} else {forms[0]['calendar.dates[340].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[340].stopSales'].value);hiliteUnsavedRow('row340');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[340].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row340');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[340].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row340');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row341'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					8
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[341].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row341');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[341].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row341');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[341].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row341');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[341].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[341].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[341].stopSales'].value == 'true') {forms[0]['calendar.dates[341].stopSales'].value = 'false'} else {forms[0]['calendar.dates[341].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[341].stopSales'].value);hiliteUnsavedRow('row341');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[341].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row341');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[341].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row341');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row342'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					9
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[342].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row342');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[342].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row342');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[342].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row342');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[342].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[342].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[342].stopSales'].value == 'true') {forms[0]['calendar.dates[342].stopSales'].value = 'false'} else {forms[0]['calendar.dates[342].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[342].stopSales'].value);hiliteUnsavedRow('row342');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[342].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row342');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[342].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row342');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row343'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					10
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[343].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row343');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[343].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row343');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[343].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row343');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[343].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[343].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[343].stopSales'].value == 'true') {forms[0]['calendar.dates[343].stopSales'].value = 'false'} else {forms[0]['calendar.dates[343].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[343].stopSales'].value);hiliteUnsavedRow('row343');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[343].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row343');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[343].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row343');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row344'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					11
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[344].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row344');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[344].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row344');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[344].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row344');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[344].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[344].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[344].stopSales'].value == 'true') {forms[0]['calendar.dates[344].stopSales'].value = 'false'} else {forms[0]['calendar.dates[344].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[344].stopSales'].value);hiliteUnsavedRow('row344');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[344].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row344');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[344].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row344');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row345'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					12
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[345].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row345');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[345].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row345');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[345].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row345');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[345].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[345].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[345].stopSales'].value == 'true') {forms[0]['calendar.dates[345].stopSales'].value = 'false'} else {forms[0]['calendar.dates[345].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[345].stopSales'].value);hiliteUnsavedRow('row345');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[345].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row345');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[345].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row345');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row346'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					13
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[346].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row346');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[346].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row346');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[346].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row346');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[346].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[346].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[346].stopSales'].value == 'true') {forms[0]['calendar.dates[346].stopSales'].value = 'false'} else {forms[0]['calendar.dates[346].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[346].stopSales'].value);hiliteUnsavedRow('row346');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[346].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row346');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[346].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row346');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row347'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					14
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[347].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row347');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[347].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row347');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[347].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row347');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[347].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[347].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[347].stopSales'].value == 'true') {forms[0]['calendar.dates[347].stopSales'].value = 'false'} else {forms[0]['calendar.dates[347].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[347].stopSales'].value);hiliteUnsavedRow('row347');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[347].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row347');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[347].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row347');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row348'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					15
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[348].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row348');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[348].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row348');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[348].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row348');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[348].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[348].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[348].stopSales'].value == 'true') {forms[0]['calendar.dates[348].stopSales'].value = 'false'} else {forms[0]['calendar.dates[348].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[348].stopSales'].value);hiliteUnsavedRow('row348');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[348].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row348');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[348].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row348');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row349'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					16
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[349].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row349');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[349].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row349');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[349].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row349');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[349].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[349].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[349].stopSales'].value == 'true') {forms[0]['calendar.dates[349].stopSales'].value = 'false'} else {forms[0]['calendar.dates[349].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[349].stopSales'].value);hiliteUnsavedRow('row349');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[349].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row349');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[349].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row349');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row350'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					17
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[350].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row350');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[350].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row350');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[350].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row350');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[350].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[350].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[350].stopSales'].value == 'true') {forms[0]['calendar.dates[350].stopSales'].value = 'false'} else {forms[0]['calendar.dates[350].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[350].stopSales'].value);hiliteUnsavedRow('row350');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[350].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row350');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[350].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row350');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row351'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					18
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[351].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row351');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[351].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row351');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[351].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row351');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[351].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[351].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[351].stopSales'].value == 'true') {forms[0]['calendar.dates[351].stopSales'].value = 'false'} else {forms[0]['calendar.dates[351].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[351].stopSales'].value);hiliteUnsavedRow('row351');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[351].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row351');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[351].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row351');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row352'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					19
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[352].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row352');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[352].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row352');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[352].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row352');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[352].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[352].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[352].stopSales'].value == 'true') {forms[0]['calendar.dates[352].stopSales'].value = 'false'} else {forms[0]['calendar.dates[352].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[352].stopSales'].value);hiliteUnsavedRow('row352');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[352].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row352');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[352].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row352');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row353'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					20
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[353].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row353');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[353].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row353');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[353].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row353');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[353].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[353].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[353].stopSales'].value == 'true') {forms[0]['calendar.dates[353].stopSales'].value = 'false'} else {forms[0]['calendar.dates[353].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[353].stopSales'].value);hiliteUnsavedRow('row353');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[353].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row353');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[353].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row353');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row354'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					21
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[354].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row354');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[354].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row354');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[354].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row354');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[354].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[354].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[354].stopSales'].value == 'true') {forms[0]['calendar.dates[354].stopSales'].value = 'false'} else {forms[0]['calendar.dates[354].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[354].stopSales'].value);hiliteUnsavedRow('row354');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[354].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row354');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[354].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row354');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row355'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					22
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[355].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row355');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[355].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row355');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[355].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row355');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[355].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[355].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[355].stopSales'].value == 'true') {forms[0]['calendar.dates[355].stopSales'].value = 'false'} else {forms[0]['calendar.dates[355].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[355].stopSales'].value);hiliteUnsavedRow('row355');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[355].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row355');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[355].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row355');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row356'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					23
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[356].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row356');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[356].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row356');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[356].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row356');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[356].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[356].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[356].stopSales'].value == 'true') {forms[0]['calendar.dates[356].stopSales'].value = 'false'} else {forms[0]['calendar.dates[356].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[356].stopSales'].value);hiliteUnsavedRow('row356');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[356].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row356');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[356].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row356');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row357'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					24
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[357].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row357');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[357].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row357');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[357].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row357');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[357].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[357].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[357].stopSales'].value == 'true') {forms[0]['calendar.dates[357].stopSales'].value = 'false'} else {forms[0]['calendar.dates[357].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[357].stopSales'].value);hiliteUnsavedRow('row357');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[357].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row357');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[357].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row357');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row358'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					25
+				</td>
+				<td align="center">
+				  
+					
+					
+							Fri
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[358].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row358');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[358].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row358');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[358].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row358');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[358].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[358].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[358].stopSales'].value == 'true') {forms[0]['calendar.dates[358].stopSales'].value = 'false'} else {forms[0]['calendar.dates[358].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[358].stopSales'].value);hiliteUnsavedRow('row358');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[358].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row358');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[358].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row358');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row359'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					26
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sat
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[359].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row359');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[359].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row359');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[359].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row359');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[359].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[359].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[359].stopSales'].value == 'true') {forms[0]['calendar.dates[359].stopSales'].value = 'false'} else {forms[0]['calendar.dates[359].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[359].stopSales'].value);hiliteUnsavedRow('row359');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[359].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row359');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[359].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row359');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row360'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					27
+				</td>
+				<td align="center">
+				  
+					
+					
+							Sun
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[360].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row360');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[360].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row360');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[360].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row360');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[360].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[360].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[360].stopSales'].value == 'true') {forms[0]['calendar.dates[360].stopSales'].value = 'false'} else {forms[0]['calendar.dates[360].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[360].stopSales'].value);hiliteUnsavedRow('row360');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[360].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row360');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[360].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row360');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row361'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					28
+				</td>
+				<td align="center">
+				  
+					
+					
+							Mon
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[361].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row361');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[361].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row361');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[361].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row361');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[361].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[361].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[361].stopSales'].value == 'true') {forms[0]['calendar.dates[361].stopSales'].value = 'false'} else {forms[0]['calendar.dates[361].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[361].stopSales'].value);hiliteUnsavedRow('row361');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[361].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row361');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[361].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row361');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row362'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					29
+				</td>
+				<td align="center">
+				  
+					
+					
+							Tue
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[362].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row362');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[362].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row362');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[362].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row362');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[362].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[362].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[362].stopSales'].value == 'true') {forms[0]['calendar.dates[362].stopSales'].value = 'false'} else {forms[0]['calendar.dates[362].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[362].stopSales'].value);hiliteUnsavedRow('row362');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[362].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row362');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[362].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row362');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row363'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					30
+				</td>
+				<td align="center">
+				  
+					
+					
+							Wed
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[363].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row363');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[363].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row363');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[363].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row363');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[363].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[363].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[363].stopSales'].value == 'true') {forms[0]['calendar.dates[363].stopSales'].value = 'false'} else {forms[0]['calendar.dates[363].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[363].stopSales'].value);hiliteUnsavedRow('row363');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[363].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row363');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[363].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row363');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				  	
+				  				
+				  	
+			  		  
+				  	
+						
+						
+						
+												
+												
+												
+                            
+						
+  				  	
+                  <tr bgcolor="#FFFFFF" id='row364'>
+  				  	
+	  				  	
+	  				  	
+							<td>&nbsp;</td>
+	  				  	
+  				  	
+				<td align="center">
+					31
+				</td>
+				<td align="center">
+				  
+					
+					
+							Thu
+					
+				  		
+				</td>
+				<td align="center">
+					
+						
+							
+								
+								
+									<input type="text" name="calendar.dates[364].remainingUnits" maxlength="3" size="3" value="3" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row364');" />
+								
+							
+						
+						
+											
+				</td>
+				<td align="center">
+					
+						
+							0
+						
+						
+					
+				</td>
+
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[364].ratesById(2).rateActual" maxlength="10" size="5" value="140.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '140.00');hiliteUnsavedRow('row364');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+					
+						
+							<td align="center" class="rate">
+								
+									
+									
+										
+										<input type="text" name="calendar.dates[364].ratesById(3).rateActual" maxlength="10" size="5" value="130.00" onclick="return warnSave()" onchange="javascript:checkLargeRateChange(this.value, '130.00');hiliteUnsavedRow('row364');" />
+									
+								
+							</td>
+							<td class="rateaudit">
+								
+									
+									&nbsp;
+								
+							</td>
+						
+						
+					
+				
+
+				
+				<td align="center">
+					
+						
+						
+						
+						
+							<input type="hidden" name="calendar.dates[364].stopSales" value="false" />
+							<input type="checkbox"
+								name="calendar.dates[364].stopSalesCheck"
+								onClick="if(forms[0]['calendar.dates[364].stopSales'].value == 'true') {forms[0]['calendar.dates[364].stopSales'].value = 'false'} else {forms[0]['calendar.dates[364].stopSales'].value = 'true'};stopSaleWarn(forms[0]['calendar.dates[364].stopSales'].value);hiliteUnsavedRow('row364');warnSave();"
+								
+							/>
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+							<input type="text" name="calendar.dates[364].releaseDaysActual" maxlength="5" size="2" value="0" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row364');" />
+						
+					
+				</td>
+				<td align="center">
+					
+						
+						
+						
+							<input type="text" name="calendar.dates[364].minStayActual" maxlength="5" size="2" value="2" onclick="return warnSave()" onchange="javascript:hiliteUnsavedRow('row364');" />
+						
+					
+				</td>
+				<td align="center">
+					Room Only
+					
+				</td>
+				<td align="center">
+					
+					  
+						
+							No						
+						
+						
+					  
+					
+				</td>
+				<td align="center">
+					
+						
+						&nbsp;
+					
+				</td>
+			</tr>				
+				
+
+			
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+			  	
+				
+			
+
+			
+			
+			<tbody><tr class="footer"><td colspan='15'>&nbsp;</td></tbody>				
+		</table>
+
+		
+		  <table width="100%">
+			<tr>
+				<td align="left">
+					<input type="submit" name="mode" value="cancel" class="submit" />
+				</td>
+				<td>
+					&nbsp;
+				</td>
+				<td align="right">
+					
+						<input type="submit" name="mode" value="update" class="submit" />    
+					
+				</td>   
+			</tr>  
+		  </table>
+		
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+&nbsp;	    	
+
+<div class="container">
+	<div class="topLeft title">
+		<div class="topRight">
+			Key
+		</div>
+	</div>
+	<div class="content">		  
+			  <table>
+				<tr>
+					<td style="color:blue;text-decoration:underline;">
+						wed
+					</td>
+					<td>
+						<label>
+							Part of a promotional stay (click to view details)
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#FF9999">&nbsp;</td>
+				    <td>
+						<label>
+							Changed value, not yet saved
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#FFFFCC" >&nbsp;</td>
+					<td>
+						<label>
+							On request allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCFFCC">&nbsp;</td>
+					<td>
+						<label>
+							Free sale allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCCCFF">&nbsp;</td>
+					<td>
+						<label>
+							Auto free sale allocation
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#CCCCCC">&nbsp;</td>
+					<td>
+						<label>
+							Date closed out
+						</label>
+					</td>
+				</tr>				
+				<tr>
+					<td bgcolor="#FF9912">&nbsp;</td>
+					<td>
+						<label>
+							Date sold out 
+						</label>
+					</td>
+				</tr>				
+			  </table>
+			
+			
+</div><div class='bottomMiddle'><div class='bottomLeft'><div class='bottomRight'>&nbsp;</div></div></div></div>
+&nbsp;
+
+</form>
+
+      </td>
+    </tr>
+	<tr>
+	  <td colspan="2">
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </td>
+    </tr>  
+  </table>
+  
+  <!-- BEGIN HumanTag Monitor. DO NOT MOVE! MUST BE PLACED JUST BEFORE THE /BODY TAG -->
+  <script language='javascript' src='https://server.iad.liveperson.net/hc/55013756/x.js?cmd=file&file=chatScript3&site=55013756&&imageUrl=https://extranet.lastminute.com/extranet/images/livechat'> 
+  </script>
+  <!-- END HumanTag Monitor. DO NOT MOVE! MUST BE PLACED JUST BEFORE THE /BODY TAG -->
+  
+  <!--  Omniture tracking -->
+  <script language="JavaScript" type="text/javascript">
+    	var s_channel  = 'MagentA';
+		var s_prop2    = 'no-user';
+	    //Force language to english for consistent page names
+		var s_pageName = s_channel+' :: ' + 'allocations - allocation calendar';
+		
+	    	s_prop2    = 'lasramblas';
+	    
+  </script>
+  <script type="text/javascript" language="JavaScript" src="https://www.lastminute.com/site/s_code_remote_lastminuteinternal.js">
+  </script>
+  <!-- ---------------- -->
+  
+</body>
+</html>

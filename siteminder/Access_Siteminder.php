@@ -21,7 +21,7 @@ class Access_Siteminder {
 		}
 		
 		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
-		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie_siteminder.sv";
+		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie_siteminder.cookie";
 	}
 	private function init_curl($url, $method = 1) {
 		$curl_dscr = curl_init($url);
