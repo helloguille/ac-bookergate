@@ -2,12 +2,28 @@
 
 
 class Access_Hostelworld {
+	/*
+		TODO: metodo close_session() para unlink($this->cookie_file)
+	*/
+	
 	function __construct($ro = null, $stockupdate = null) {
-		$this->property = "11590";
-		$this->username = "agent";
-		$this->password = "casanova11";
+		if (is_object($ro)) { 
+			$data = $ro->getExternalSyncDetails("hw");
+			$this->username = $data["username"];
+			$this->password = $data["password"];
+			$this->property = $data["hw_property_number"];
+			print_r($data);
+		}
+		elseif (is_null($ro)) {
+			/*
+				This is the configuration used for testing
+			*/
+			$this->property = "11590";
+			$this->username = "agent";
+			$this->password = "casanova11";
+		}
 		$this->cookie = "";
-		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie_hw.cookie";
+		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/hw_".md5(uniqid()).".cookie";
 		$this->referer = "https://secure.webresint.com/inbox/index.php";
 	}
 
@@ -68,7 +84,9 @@ class Access_Hostelworld {
 
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
-
+		
+		//echo $info;
+		
 		$html = phpQuery::newDocument($info);
 		$status = $html->find('a[href="/inbox/logout.php"]')->length > 0;
 		phpQuery::unloadDocuments();

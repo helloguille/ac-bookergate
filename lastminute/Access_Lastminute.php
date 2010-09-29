@@ -8,7 +8,7 @@ class Access_Lastminute {
 
 		$this->username = "lasramblas";
 		$this->password = "Bcn2010";
-		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/cookie_lastminute.cookie";
+		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/lastminute_".md5(uniqid()).".cookie";
 		$this->referer = "https://extranet.lastminute.com/extranet/index.do";
 	}
 	private function init_curl($url, $method = 1) {
