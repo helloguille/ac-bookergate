@@ -8,7 +8,7 @@
 	
 	if ( $a_siteminder->login() ) {
 		echo $a_siteminder->fetch('2010-08-06');
-		echo var_dump($a_siteminder->send_post(array("hrtda_149362" => 2, "hrtda_149763" => 3, "hotelierId" => 41)));
+		echo var_dump($a_siteminder->send_stock(array("hrtda_149362" => 2, "hrtda_149763" => 3)));
 	}
 	else {
 		echo "login not successfull";	
