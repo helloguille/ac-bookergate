@@ -12,7 +12,7 @@ class Access_Hostelworld {
 			$this->username = $data["username"];
 			$this->password = $data["password"];
 			$this->property = $data["hw_property_number"];
-			print_r($data);
+			//print_r($data);
 		}
 		elseif (is_null($ro)) {
 			/*

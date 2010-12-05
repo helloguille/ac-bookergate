@@ -9,7 +9,7 @@ class Access_Siteminder {
 			$this->username = $data["username"];
 			$this->password = $data["password"];
 			$this->ext_siteminder_iHotelier = $data["siteminder_iHotelier"];
-			print_r($data);
+			//print_r($data);
 		}
 		elseif (is_null($ro)) {
 			/*
