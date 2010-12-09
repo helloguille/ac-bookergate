@@ -7,7 +7,7 @@ class Access_Lastminute {
 		$this->stockupdate = $stockupdate;
 
 		$this->username = "lasramblas";
-		$this->password = "Bcn2010";
+		$this->password = "Minute1";
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/lastminute_".md5(uniqid()).".cookie";
 		$this->referer = "https://extranet.lastminute.com/extranet/index.do";
 	}
