@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
 */
@@ -9,7 +9,9 @@
  *
  * @author Mohamed
  */
-
+require($_SERVER['DOCUMENT_ROOT']."/sites/default/components/bookergate/venere/libs/venere/VenereWSBase.php");
+require($_SERVER['DOCUMENT_ROOT']."/sites/default/components/bookergate/venere/base_methods.php");
+require($_SERVER['DOCUMENT_ROOT']."/sites/default/components/bookergate/venere/config/Credentials.php");
 
 
 class Access_Venere {
@@ -20,7 +22,7 @@ class Access_Venere {
         $this->venere_services = new VenereWSBase($params);
     }
 
-    function update_availability($room_category, $from, $to, $values) {
+    function send_update_availability($room_category, $from, $to, $values) {
         $time_from = strtotime($from);
         $time_to = strtotime($to);
 
@@ -48,8 +50,18 @@ class Access_Venere {
             }
             $params = $params.'</AvailStatusMessages></OTA_HotelAvailNotifRQ>';
             $result = $this->venere_services->make_request("OTA_HotelAvailNotif", $params, 'OTA_HotelAvailNotif_Request');
-            $this->venere_services->print_response($this->venere_services->get_client(),$result);
+            //$this->venere_services->print_response($this->venere_services->get_client(),$result);
+            return $result;
         }
+    }
+    function update_avaliability($room_category, $from, $to, $values) {
+        $result = $this->send_update_availability($room_category, $from, $to, $values);
+        foreach ($result as $key => $element) {
+            if($key == "Errors") {
+							return false;
+            }
+        }
+        return true;
     }
 
 }
