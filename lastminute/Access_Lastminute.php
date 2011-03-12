@@ -71,7 +71,7 @@ class Access_Lastminute {
 
 	function send_post($year, $month, $mixed) {
 		$url_post = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do";
-		$post = "alertCheck=true&mode=update&rowUpdate=true&accommUnitId=108914&allocationId=940490&productId=1068401&priorityMode=&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
+		$post = "alertCheck=true&mode=update&rowUpdate=true&accommUnitId=108914&allocationId=1347462&productId=1068401&priorityMode=&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
 
 		foreach ( $mixed as $id => $val ) {
 			//$post .= '&calendar.dates['.$id.'].remainingUnits='.$val['to_sell'].'&calendar.dates['.$id.'].ratesById(2).rateActual='.$val['rate'];
