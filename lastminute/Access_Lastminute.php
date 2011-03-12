@@ -46,7 +46,7 @@ class Access_Lastminute {
 
 		if ( !$status ) return $status;
 
-		$url_fetch = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do?allocationId=940490&accommUnitId=108914&productId=1068401";
+		$url_fetch = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do?allocationId=1347462&accommUnitId=108914&productId=1068401";
 		$ch = $this->init_curl($url_fetch, 0);
 		curl_exec($ch);
 		$this->uninit_curl($ch);
@@ -55,7 +55,7 @@ class Access_Lastminute {
 	}
 	function fetch($year, $month) {
 		$url_fetch = "https://extranet.lastminute.com/extranet/accomm/allocations/allocationcalendar.do";
-		$post = "alertCheck=true&rowUpdate=false&accommUnitId=108914&allocationId=940490&productId=1068401&priorityMode=ShowMonth&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
+		$post = "alertCheck=true&rowUpdate=false&accommUnitId=108914&allocationId=1347462&productId=1068401&priorityMode=ShowMonth&selectedDate=&selectedMonth=".$month."&selectedYear=".$year;
 
 		$ch = $this->init_curl($url_fetch, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
