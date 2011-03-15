@@ -60,12 +60,28 @@ class Access_Booking {
 		return $this->raw;
 	}
 	function get_bookings() {
-		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=286161&last_period=month&type=booking&period=month&selected_period=2011-02-01&show=Show")	;
+		$previous_month = date("m", strtotime("-1 month"));
+		$current_month = date("m");
+
+		$previous_year = date("Y", strtotime("-1 month"));
+		$current_year = date("Y");		
+		
+		//exit("previous_year = $previous_year / current_year = $current_year");
+		
+		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=286161&last_period=month&type=booking&period=month&selected_period=".$previous_year."-".$previous_month."-01&show=Show")	;
 		$html = phpQuery::newDocument($this->raw);
 		foreach ($html->find('a[href*="booking.html"]') as $b) {
 			$list[] = $b->nodeValue;	
 		}
 		phpQuery::unloadDocuments();
+
+		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=286161&last_period=month&type=booking&period=month&selected_period=".$current_year."-".$current_month."-01&show=Show")	;
+		$html = phpQuery::newDocument($this->raw);
+		foreach ($html->find('a[href*="booking.html"]') as $b) {
+			$list[] = $b->nodeValue;	
+		}
+		phpQuery::unloadDocuments();
+		
 		return $list;
 	}
 	function get_booking($booking_id) {
