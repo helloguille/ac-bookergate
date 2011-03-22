@@ -7,9 +7,10 @@ class Access_Booking {
 	
 	function __construct() {
 
-		$this->loginname = "286161";
-		$this->password = "4474";
-		
+		$this->loginname = "242484";
+		$this->password = "6912";
+		$this->hotel_id = "242484";
+
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/booking_".md5(uniqid()).".cookie";
 		$this->referer = "https://admin.bookings.org/hotel/";
 	}
@@ -68,14 +69,14 @@ class Access_Booking {
 		
 		//exit("previous_year = $previous_year / current_year = $current_year");
 		
-		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=286161&last_period=month&type=booking&period=month&selected_period=".$previous_year."-".$previous_month."-01&show=Show")	;
+		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=".$this->hotel_id."&last_period=month&type=booking&period=month&selected_period=".$previous_year."-".$previous_month."-01&show=Show")	;
 		$html = phpQuery::newDocument($this->raw);
 		foreach ($html->find('a[href*="booking.html"]') as $b) {
 			$list[] = $b->nodeValue;	
 		}
 		phpQuery::unloadDocuments();
 
-		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=286161&last_period=month&type=booking&period=month&selected_period=".$current_year."-".$current_month."-01&show=Show")	;
+		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/bookings.html?ses=".$this->ses."&hotel_id=".$this->hotel_id."&last_period=month&type=booking&period=month&selected_period=".$current_year."-".$current_month."-01&show=Show")	;
 		$html = phpQuery::newDocument($this->raw);
 		foreach ($html->find('a[href*="booking.html"]') as $b) {
 			$list[] = $b->nodeValue;	
@@ -99,7 +100,7 @@ class Access_Booking {
 			"Number of persons",
 			
 		);
-		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/booking.html?bn=".$booking_id.";hotel_id=286161;ses=".$this->ses)	;
+		$this->raw = $this->get_contents("https://admin.bookings.org/hotel/hoteladmin/booking.html?bn=".$booking_id.";hotel_id=".$this->hotel_id.";ses=".$this->ses)	;
 		$html = phpQuery::newDocument($this->raw);
 		$rows = $html->find('.tablebig td');
 		$list["_rooms"] = array();
