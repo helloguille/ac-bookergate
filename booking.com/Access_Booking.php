@@ -92,7 +92,7 @@ class Access_Booking {
 			"Telephone",
 			"Total number of rooms",
 			"Total number of guests",
-			"Total costs",
+			"Total costs all rooms",
 			"Status",
 			"Arrival",
 			"Departure",
