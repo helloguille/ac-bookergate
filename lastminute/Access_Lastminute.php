@@ -5,9 +5,10 @@ class Access_Lastminute {
 
 	function __construct($ro = null, $stockupdate = null) {
 		$this->stockupdate = $stockupdate;
-
-		$this->username = "lasramblas";
-		$this->password = "Minute3";
+		
+		$data = $ro->getExternalSyncDetails("lastminute");
+		$this->username = $data["username"];
+		$this->password = $data["password"];
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/lastminute_".md5(uniqid()).".cookie";
 		$this->referer = "https://extranet.lastminute.com/extranet/index.do";
 	}
