@@ -44,17 +44,22 @@ class Access_Siteminder {
 	}
 
 	function login() {
-		$url_login = "https://www.siteminder.co.uk/hoteliers/j_acegi_security_check";	
+		$url_login = "https://www.siteminder.co.uk/web/j_spring_security_check";	
 		
 		$ch = $this->init_curl($url_login, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "j_password=".$this->password."&j_username=".$this->username."&x=0&y=0");
 
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
-
+		
+		$this->debug_data["POST_LOGIN_RESULT"] = $info;
+		
 		$html = phpQuery::newDocument($info);
-		$status = $html->find('a[href="../j_acegi_logout"]')->length > 0;
+		$status = $html->find('a[href="/web/logout"]')->length > 0;
 		phpQuery::unloadDocuments();
+
+		$this->debug_data["POST_LOGIN_STATUS"] = $status;
+
 
 		return $status;
 	}
@@ -70,11 +75,15 @@ class Access_Siteminder {
 		return $info;
 	}
 	function send_stock($cells) {
-		$cells["hotelierId"] = $this->ext_siteminder_iHotelier;
+		$cells["_method"] = "PUT";
+		$cells["state[y]"] = "114";
 		return $this->send_post($cells);
 	}
 	function send_post($mixed) {
-		$url_post = "https://www.siteminder.co.uk/hoteliers/inventory/updateInventory.rpc";
+		
+		$url_post = "https://www.siteminder.co.uk/web/extranet/inventory/".$this->ext_siteminder_iHotelier;
+		$this->debug_data["url_post"] = $url_post;
+
 		$post = '';
 
 		foreach ( $mixed as $id => $val ) $post .= "&$id=$val";
@@ -83,13 +92,13 @@ class Access_Siteminder {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post, 1));
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
-echo $info;
+		$this->debug_data["POST_SEND_STOCK"] = $info;
 		/*$info = trim($info, "{}");
 		$result = explode(',', $info);
 		$result = explode(':', $result[0]);
 
 		return ( strlen($result[1]) > 2 ? TRUE : FALSE );
-		*/
+		*/		
 		return $info;
 	}
 }
