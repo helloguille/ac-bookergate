@@ -65,7 +65,7 @@ class Access_Siteminder {
 	}
 
 	function fetch($date) {
-		$url_fetch = "https://www.siteminder.co.uk/hoteliers/inventory/editInventory.do?hotelierId=".$this->ext_siteminder_iHotelier."&showStopSells=&showMinStays=&fromDate=".$date."&scrollDirection=REFRESH&scrollDays=0&scrollTop=114";
+		$url_fetch = "https://www.siteminder.co.uk/web/extranet/inventory/".$this->ext_siteminder_iHotelier."?startDate=".$date;
 
 		$ch = $this->init_curl($url_fetch, 0);
 

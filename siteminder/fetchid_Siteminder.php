@@ -1,21 +1,27 @@
 <?
 
 function fetchid_Siteminder($fn) {
+	/*
+		Obtiene desde el formulario de edición de inventario de 
+		siteminder los IDs de cada celda según corresponda.
+		
+		array (
+		 ext_id_sitem => 
+		 array(
+		 	date => cell id
+		 )
+		)
+	*/
 	$arr = array();
 
 	$html = phpQuery::newDocument($fn);
-	foreach ($html->find('input[id^="hrtda_"]') as $in) {
-		$fcs = pq($in)->attr('onfocus');
-		$id = pq($in)->attr('id');
+	foreach ($html->find('input[id^="hrtds_"]') as $in) {
+		$ext_id_sitem = pq($in)->attr('data-hrt');
+		$date = pq($in)->attr('data-date');
+		$date = substr($date, 0, 4)."-".substr($date, 4, 2)."-".substr($date, 6, 2);
+		$parts = explode('_', pq($in)->attr('id'));
 
-		$indexs = explode(',', $fcs);
-		$indexs[1] = trim($indexs[1]);
-		$indexs[2] = ltrim($indexs[2], " '");
-		$indexs[2] = rtrim($indexs[2], "')");
-
-		$id_num = explode('_', $id);
-
-		$arr[$indexs[1]][$indexs[2]] = $id_num[1];
+		$arr[$ext_id_sitem][$date] = $parts[1];
 	}
 	phpQuery::unloadDocuments();
 
