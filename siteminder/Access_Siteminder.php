@@ -77,6 +77,8 @@ class Access_Siteminder {
 	function send_stock($cells) {
 		$cells["_method"] = "PUT";
 		$cells["state[y]"] = "114";
+		$cells["org.codehaus.groovy.grails.SYNCHRONIZER_URI"] = "/web/extranet/inventory/".$this->ext_siteminder_iHotelier;
+		$cells["org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN"] = "9709e456-6014-4f04-93a1-2d56da28e9b0";
 		return $this->send_post($cells);
 	}
 	function send_post($mixed) {
