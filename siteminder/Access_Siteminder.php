@@ -20,7 +20,7 @@ class Access_Siteminder {
 			$this->ext_siteminder_iHotelier = 41;
 		}
 		
-		$this->referer = "https://www.siteminder.co.uk/siteminder/sm-login.html";
+		$this->referer = "https://www.siteminder.co.uk/web/login";
 		$this->cookie_file = $_SERVER["DOCUMENT_ROOT"]."/cache/siteminder_".md5(uniqid()).".cookie";
 	}
 	private function init_curl($url, $method = 1) {
@@ -44,10 +44,10 @@ class Access_Siteminder {
 	}
 
 	function login() {
-		$url_login = "https://www.siteminder.co.uk/web/j_spring_security_check";	
+		$url_login = "https://www.siteminder.co.uk/web/userSessions";	
 		
 		$ch = $this->init_curl($url_login, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "j_password=".$this->password."&j_username=".$this->username."&x=0&y=0");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "password=".$this->password."&username=".$this->username."&x=0&y=0");
 
 		$info = curl_exec($ch);
 		$this->uninit_curl($ch);
