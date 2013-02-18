@@ -59,7 +59,7 @@ class Access_Siteminder {
 		$this->debug_data["POST_LOGIN_RESULT"] = $info;
 		
 		$html = phpQuery::newDocument($info);
-		$status = $html->find('a[href="/web/logout"]')->length > 0;
+		$status = $html->find('a:contains("Logout")')->length > 0;
 		phpQuery::unloadDocuments();
 
 		$this->debug_data["POST_LOGIN_STATUS"] = $status;
