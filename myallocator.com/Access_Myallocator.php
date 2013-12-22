@@ -10,7 +10,9 @@ class Access_Myallocator {
     function SetAllocation($from, $to, $stock, $rate) {
 		$UserId = "agent";
 		$UserPassword = "11madrid11";
-
+		if (!is_object($this->stockupdate->syncconnection)) {
+			$this->stockupdate->log_Event("No syncconnection for".$this->stockupdate->syncconnection);
+		}
 		$xml_request = "<?xml version=\"1.0\"?> 
 		<SetAllocation>
 		<Auth>
