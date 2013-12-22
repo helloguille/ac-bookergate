@@ -30,7 +30,7 @@ class Access_Venere {
             throw new Exception("To date should be greater than from date");
         }
 
-        if((date_Diff("-", $to, $from) + 1) != count($values)) {
+        if((date_Diff2("-", $to, $from) + 1) != count($values)) {
             throw new Exception("Number of rooms don't match number of days");
         }
 

@@ -1,5 +1,5 @@
 <?php
-function date_Diff($dformat, $endDate, $beginDate) {
+function date_Diff2($dformat, $endDate, $beginDate) {
     $date_parts1=explode($dformat, $beginDate);
     $date_parts2=explode($dformat, $endDate);
     $start_date=gregoriantojd($date_parts1[1], $date_parts1[2], $date_parts1[0]);
