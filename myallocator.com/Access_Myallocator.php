@@ -40,7 +40,7 @@ class Access_Myallocator {
 
 		//exit($xml);
 		$postfields = array(
-		  'xmlRequestString' => $xml[$i]
+		  'xmlRequestString' => $xml
 		);
 		// We send XML via CURL using POST with a http header of text/xml.
 		$ch = curl_init();
@@ -59,7 +59,8 @@ class Access_Myallocator {
 			return true;
 		}
 		else {
-			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed", $ch_result);
+			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed. xmlRequestString:", $xml);
+			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed. Response:", $ch_result);
 		}
 		return false;
 
