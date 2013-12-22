@@ -16,7 +16,7 @@ class Access_Myallocator {
 		<Auth>
 		  <UserId>".$UserId."</UserId> 
 		  <UserPassword>".$UserPassword."</UserPassword> 
-		  <PropertyId>".$this->stockupdate->myallocator_propertyid."</PropertyId> 
+		  <PropertyId>".$this->stockupdate->syncconnection->myallocator_propertyid."</PropertyId> 
 		  <VendorId>madridac</VendorId> 
 		  <VendorPassword>7ENk42zQLN</VendorPassword>
 		</Auth>
@@ -25,7 +25,7 @@ class Access_Myallocator {
 		</Channels>
 		<Allocations>
 		  <Allocation>
-		    <RoomTypeId>".$this->stockupdate->myallocator_roomid."</RoomTypeId>
+		    <RoomTypeId>".$this->stockupdate->syncconnection->myallocator_roomid."</RoomTypeId>
 		￼￼  <StartDate>".date("Y-m-d", $from)."</StartDate>
 		    <EndDate>".date("Y-m-d", $to)."</EndDate>
 		    <Units>".$stock."</Units>
