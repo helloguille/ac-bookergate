@@ -11,7 +11,7 @@ class Access_Myallocator {
 		$UserId = "agent";
 		$UserPassword = "11madrid11";
 
-		$xml = "<?xml version=\"1.0\"?> 
+		$xml_request = "<?xml version=\"1.0\"?> 
 		<SetAllocation>
 		<Auth>
 		  <UserId>".$UserId."</UserId> 
@@ -40,7 +40,7 @@ class Access_Myallocator {
 
 		//exit($xml);
 		$postfields = array(
-		  'xmlRequestString' => $xml
+		  'xmlRequestString' => $xml_request
 		);
 		// We send XML via CURL using POST with a http header of text/xml.
 		$ch = curl_init();
@@ -59,7 +59,7 @@ class Access_Myallocator {
 			return true;
 		}
 		else {
-			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed. xmlRequestString:", $xml);
+			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed. xmlRequestString:", $xml_request);
 			$this->stockupdate->log_Event("Access_Myallocator::SetAllocation: XML failed. Response:", $ch_result);
 		}
 		return false;
