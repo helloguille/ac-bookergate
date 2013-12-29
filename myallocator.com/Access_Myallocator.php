@@ -7,7 +7,7 @@ class Access_Myallocator {
     	$this->stockupdate = $stockupdate;
     }
 
-    function SetAllocation($from, $to, $stock, $rate) {
+    function SetAllocation($from, $to, $stock, $rate = null) {
 		$UserId = "agent";
 		$UserPassword = "11madrid11";
 		if (!is_object($this->stockupdate->syncconnection)) {
@@ -30,11 +30,18 @@ class Access_Myallocator {
 		    <RoomTypeId>".$this->stockupdate->syncconnection->myallocator_roomid."</RoomTypeId>
 		￼￼  <StartDate>".date("Y-m-d", $from)."</StartDate>
 		    <EndDate>".date("Y-m-d", $to)."</EndDate>
-		    <Units>".$stock."</Units>
-		    <Prices>
-		      <Price>".$rate."</Price>
-		      <Price weekend=\"true\">".$rate."</Price>
-		    </Prices>
+		    <Units>".$stock."</Units>";
+
+		if ($rate > 20) {
+			$sql .= "
+			    <Prices>
+			      <Price>".$rate."</Price>
+			      <Price weekend=\"true\">".$rate."</Price>
+			    </Prices>
+			";
+		}
+
+		$sql .= "
 		  </Allocation>
 		</Allocations>
 		</SetAllocation>";
