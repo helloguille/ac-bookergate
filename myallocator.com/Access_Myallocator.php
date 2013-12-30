@@ -33,7 +33,7 @@ class Access_Myallocator {
 		    <Units>".$stock."</Units>";
 
 		if ($rate > 20) {
-			$sql .= "
+			$xml_request .= "
 			    <Prices>
 			      <Price>".$rate."</Price>
 			      <Price weekend=\"true\">".$rate."</Price>
@@ -41,7 +41,7 @@ class Access_Myallocator {
 			";
 		}
 
-		$sql .= "
+		$xml_request .= "
 		  </Allocation>
 		</Allocations>
 		</SetAllocation>";
