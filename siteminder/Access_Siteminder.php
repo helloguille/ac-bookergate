@@ -81,8 +81,8 @@ class Access_Siteminder {
 	function send_stock($cells) {
 		$cells["_method"] = "PUT";
 		$cells["state[y]"] = "114";
-		$cells["org.codehaus.groovy.grails.SYNCHRONIZER_URI"] = "/web/extranet/inventory/".$this->ext_siteminder_iHotelier;
-		$cells["org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN"] = $this->getToken();
+		$cells["SYNCHRONIZER_URI"] = "/web/extranet/inventory/".$this->ext_siteminder_iHotelier;
+		$cells["SYNCHRONIZER_TOKEN"] = $this->getToken();
 		return $this->send_post($cells);
 	}
 	function getToken() {
@@ -90,13 +90,14 @@ class Access_Siteminder {
 		$ch = $this->init_curl($url_fetch, 0);
 		$info = curl_exec($ch);
 		$html = phpQuery::newDocument($info);
-		$token_value = $html->find('input[name="org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN"]')->val();
+		$token_value = $html->find('input[name="SYNCHRONIZER_TOKEN"]')->val();
 		return $token_value;
 	}
 	function send_post($mixed) {
 		
 		$url_post = "https://www.siteminder.co.uk/web/extranet/inventory/".$this->ext_siteminder_iHotelier;
 		$this->debug_data["url_post"] = $url_post;
+		$this->debug_data["post_params"] = $mixed;
 
 		$post = '';
 
