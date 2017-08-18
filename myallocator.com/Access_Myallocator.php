@@ -26,7 +26,7 @@ class Access_Myallocator {
 			// We send XML via CURL using POST with a http header of text/xml.
 			$ch = curl_init();
 			// set URL and other appropriate options
-			curl_setopt($ch, CURLOPT_URL, "http://api.myallocator.com");
+			curl_setopt($ch, CURLOPT_URL, "https://api.myallocator.com");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
@@ -83,7 +83,7 @@ class Access_Myallocator {
 		// We send XML via CURL using POST with a http header of text/xml.
 		$ch = curl_init();
 		// set URL and other appropriate options
-		curl_setopt($ch, CURLOPT_URL, "http://api.myallocator.com");
+		curl_setopt($ch, CURLOPT_URL, "https://api.myallocator.com");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
